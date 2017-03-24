@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		8429A6F41E827AA100097602 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F31E827AA100097602 /* AppDelegate.swift */; };
-		8429A6F61E827AA100097602 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F51E827AA100097602 /* ViewController.swift */; };
+		8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F51E827AA100097602 /* TaskListViewController.swift */; };
 		8429A6F91E827AA100097602 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8429A6F71E827AA100097602 /* Main.storyboard */; };
 		8429A6FB1E827AA100097602 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8429A6FA1E827AA100097602 /* Assets.xcassets */; };
 		8429A6FE1E827AA100097602 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8429A6FC1E827AA100097602 /* LaunchScreen.storyboard */; };
 		8429A7091E827AA100097602 /* ToDoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A7081E827AA100097602 /* ToDoListTests.swift */; };
+		8429A7141E827F0600097602 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A7131E827F0600097602 /* Task.swift */; };
+		84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF31181E82945500B43773 /* TaskListTableView.swift */; };
+		84FF311B1E82C48E00B43773 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +31,7 @@
 /* Begin PBXFileReference section */
 		8429A6F01E827AA100097602 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8429A6F31E827AA100097602 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8429A6F51E827AA100097602 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8429A6F51E827AA100097602 /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		8429A6F81E827AA100097602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8429A6FA1E827AA100097602 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8429A6FD1E827AA100097602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +39,9 @@
 		8429A7041E827AA100097602 /* ToDoListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8429A7081E827AA100097602 /* ToDoListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListTests.swift; sourceTree = "<group>"; };
 		8429A70A1E827AA100097602 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8429A7131E827F0600097602 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		84FF31181E82945500B43773 /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListTableView.swift; sourceTree = "<group>"; };
+		84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +84,10 @@
 			isa = PBXGroup;
 			children = (
 				8429A6F31E827AA100097602 /* AppDelegate.swift */,
-				8429A6F51E827AA100097602 /* ViewController.swift */,
+				8429A6F51E827AA100097602 /* TaskListViewController.swift */,
+				8429A7131E827F0600097602 /* Task.swift */,
+				84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */,
+				84FF31181E82945500B43773 /* TaskListTableView.swift */,
 				8429A6F71E827AA100097602 /* Main.storyboard */,
 				8429A6FA1E827AA100097602 /* Assets.xcassets */,
 				8429A6FC1E827AA100097602 /* LaunchScreen.storyboard */,
@@ -146,7 +155,6 @@
 				TargetAttributes = {
 					8429A6EF1E827AA100097602 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = C6HVJ64EDS;
 						ProvisioningStyle = Automatic;
 					};
 					8429A7031E827AA100097602 = {
@@ -201,7 +209,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8429A6F61E827AA100097602 /* ViewController.swift in Sources */,
+				8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */,
+				84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */,
+				84FF311B1E82C48E00B43773 /* TaskTableViewCell.swift in Sources */,
+				8429A7141E827F0600097602 /* Task.swift in Sources */,
 				8429A6F41E827AA100097602 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,10 +352,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C6HVJ64EDS;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ToDoList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ToDoList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -354,10 +366,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C6HVJ64EDS;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ToDoList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.ToDoList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -412,6 +425,7 @@
 				8429A70F1E827AA100097602 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8429A7101E827AA100097602 /* Build configuration list for PBXNativeTarget "ToDoListTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +434,7 @@
 				8429A7121E827AA100097602 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
