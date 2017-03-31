@@ -14,6 +14,13 @@
 		8429A6FE1E827AA100097602 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8429A6FC1E827AA100097602 /* LaunchScreen.storyboard */; };
 		8429A7091E827AA100097602 /* ToDoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A7081E827AA100097602 /* ToDoListTests.swift */; };
 		8429A7141E827F0600097602 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A7131E827F0600097602 /* Task.swift */; };
+		846A5BCC1E8D593B0087A00C /* ToDoListContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A5BCB1E8D593B0087A00C /* ToDoListContext.swift */; };
+		84ED1A471E8A8F56008FD53D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A461E8A8F56008FD53D /* Category.swift */; };
+		84ED1A491E8A90C5008FD53D /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A481E8A90C5008FD53D /* CategoriesViewController.swift */; };
+		84ED1A4B1E8A98C2008FD53D /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A4A1E8A98C2008FD53D /* CategoryViewCell.swift */; };
+		84ED1A4D1E8BDFB6008FD53D /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A4C1E8BDFB6008FD53D /* CategoryViewController.swift */; };
+		84F6ED791E8E976B00FDBAF5 /* TasksFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6ED781E8E976B00FDBAF5 /* TasksFiltersViewController.swift */; };
+		84F6ED7B1E8ED1CC00FDBAF5 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6ED7A1E8ED1CC00FDBAF5 /* TaskViewController.swift */; };
 		84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF31181E82945500B43773 /* TaskListTableView.swift */; };
 		84FF311B1E82C48E00B43773 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +47,13 @@
 		8429A7081E827AA100097602 /* ToDoListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListTests.swift; sourceTree = "<group>"; };
 		8429A70A1E827AA100097602 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8429A7131E827F0600097602 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		846A5BCB1E8D593B0087A00C /* ToDoListContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListContext.swift; sourceTree = "<group>"; };
+		84ED1A461E8A8F56008FD53D /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		84ED1A481E8A90C5008FD53D /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		84ED1A4A1E8A98C2008FD53D /* CategoryViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
+		84ED1A4C1E8BDFB6008FD53D /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		84F6ED781E8E976B00FDBAF5 /* TasksFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFiltersViewController.swift; sourceTree = "<group>"; };
+		84F6ED7A1E8ED1CC00FDBAF5 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		84FF31181E82945500B43773 /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListTableView.swift; sourceTree = "<group>"; };
 		84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,12 +100,19 @@
 				8429A6F31E827AA100097602 /* AppDelegate.swift */,
 				8429A6F51E827AA100097602 /* TaskListViewController.swift */,
 				8429A7131E827F0600097602 /* Task.swift */,
+				84ED1A461E8A8F56008FD53D /* Category.swift */,
 				84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */,
 				84FF31181E82945500B43773 /* TaskListTableView.swift */,
 				8429A6F71E827AA100097602 /* Main.storyboard */,
 				8429A6FA1E827AA100097602 /* Assets.xcassets */,
 				8429A6FC1E827AA100097602 /* LaunchScreen.storyboard */,
 				8429A6FF1E827AA100097602 /* Info.plist */,
+				84ED1A481E8A90C5008FD53D /* CategoriesViewController.swift */,
+				84ED1A4A1E8A98C2008FD53D /* CategoryViewCell.swift */,
+				84ED1A4C1E8BDFB6008FD53D /* CategoryViewController.swift */,
+				846A5BCB1E8D593B0087A00C /* ToDoListContext.swift */,
+				84F6ED781E8E976B00FDBAF5 /* TasksFiltersViewController.swift */,
+				84F6ED7A1E8ED1CC00FDBAF5 /* TaskViewController.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -212,9 +233,16 @@
 			files = (
 				8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */,
 				84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */,
+				84ED1A4B1E8A98C2008FD53D /* CategoryViewCell.swift in Sources */,
+				846A5BCC1E8D593B0087A00C /* ToDoListContext.swift in Sources */,
 				84FF311B1E82C48E00B43773 /* TaskTableViewCell.swift in Sources */,
+				84F6ED7B1E8ED1CC00FDBAF5 /* TaskViewController.swift in Sources */,
 				8429A7141E827F0600097602 /* Task.swift in Sources */,
 				8429A6F41E827AA100097602 /* AppDelegate.swift in Sources */,
+				84F6ED791E8E976B00FDBAF5 /* TasksFiltersViewController.swift in Sources */,
+				84ED1A491E8A90C5008FD53D /* CategoriesViewController.swift in Sources */,
+				84ED1A4D1E8BDFB6008FD53D /* CategoryViewController.swift in Sources */,
+				84ED1A471E8A8F56008FD53D /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -374,6 +403,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
