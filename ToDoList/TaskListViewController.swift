@@ -10,6 +10,11 @@ import UIKit
 
 class TaskListViewController: UIViewController, UITableViewDataSource, UIPopoverPresentationControllerDelegate, UITextFieldDelegate {
     //MARK: Properties
+    var tasks: [Task] {
+        get {
+            return ToDoListContext.instance.GetTasks()
+        }
+    }
     @IBOutlet weak var taskListTableView: TaskListTableView!
     @IBOutlet weak var filtersDropdownButton: UIButton!
     @IBOutlet weak var taskNameEdit: UITextField!
@@ -20,7 +25,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         //init task list table view
         //taskListTableView.delegate = self;
         taskListTableView.dataSource = self
-        taskListTableView.tasks = ToDoListContext.instance.GetTasks()
+        //taskListTableView.tasks = ToDoListContext.instance.GetTasks()
         taskNameEdit.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -35,7 +40,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? TaskTableViewCell else {
             fatalError("failed ot instantiate tableview cell")
         }
-        let task = taskListTableView.tasks[indexPath.row]
+        let task = tasks[indexPath.row]
         cell.setCellValue(forTask: task)
         //cell.isDoneSwitch.isOn = task.isDone
         //cell.taskCaptionLabel.text = task.caption
@@ -46,7 +51,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskListTableView.tasks.count
+        return tasks.count
     }
     //MARK: UIPopoverPresentationControllerDelegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -86,6 +91,12 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
                 fatalError("unexpected destanation - \(segue.destination) instead of TaskViewController")
             }
             taskView.quickTaskName = taskNameEdit.text
+        }
+    }
+    @IBAction func unwindToTasks(sender: UIStoryboardSegue) {
+        if let source = sender.source as? TaskViewController {
+            ToDoListContext.instance.AddTask(source.task!)
+            taskListTableView.reloadData()
         }
     }
     //MARK: Private methods

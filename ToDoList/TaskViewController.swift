@@ -16,6 +16,8 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     var taskCategories: [Category]?
     var taskHashTags: [String]?
     var taskDueDate: Date?
+    var taskIsReoccuring: Bool?
+    var task: Task?
     
     @IBOutlet weak var taskNameEdit: UITextField!
     @IBOutlet weak var descriptionEdit: UITextField!
@@ -60,15 +62,28 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
     }
-    /*
+    
     // MARK: - Navigation
-
+     
+     @IBAction func unwindToTask(sender: UIStoryboardSegue) {
+     if let source = sender.source as? DueDateViewController, let dueDate = source.dueDate, let isReoccuring = source.isReoccuring {
+            taskDueDate = dueDate
+            taskIsReoccuring = isReoccuring
+        }
+     syncViewWithModel()
+     }
+    /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ */
+    // MARK: - Actions
+    
+    @IBAction func CreateButtonClick(_ sender: Any) {
+        task = CreateTask()
+    }
     // MARK: - Private Methods
     private func syncViewWithModel() {
         if (quickTaskName != nil) {
@@ -85,25 +100,30 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
         
         if (taskDueDate != nil) {
             let dueDateFormatter = DateFormatter()
-            dueDateFormatter.dateFormat = "MMMM, dd hh:mm a"
+            dueDateFormatter.dateFormat = "MMMM dd, HH:mm"
             dueDateLabel.text = dueDateFormatter.string(from: taskDueDate!)
         } else {
             dueDateLabel.text = "Due Date"
         }
-    }
-    private func syncModelWithView() {
-        if taskNameEdit.text != nil && taskNameEdit.text != "" {
-            quickTaskName = taskNameEdit.text
-        }
         
-        if descriptionEdit.text != nil && descriptionEdit.text != "" {
-            taskDescription = descriptionEdit.text
+        //
+        var isValid = false
+        if (quickTaskName == nil) {
+            isValid = false
+        } else if (taskDescription == nil) {
+            isValid = false
+        } else if (taskDueDate == nil) {
+            isValid = false
+        } else if (taskIsReoccuring == nil) {
+            isValid = false
+        } else {
+            isValid = true
         }
+        createButton.isEnabled = isValid
     }
-    @IBAction func unwindToTask(sender: UIStoryboardSegue) {
-        if let source = sender.source as? DueDateViewController, let dueDate = source.dueDate {
-            taskDueDate = dueDate
-        }
-        syncViewWithModel()
+    private func CreateTask() -> Task? {
+        let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: [], hashTags: [])
+        task?.isReoccuring = taskIsReoccuring!
+        return task
     }
 }

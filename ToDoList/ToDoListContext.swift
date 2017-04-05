@@ -13,8 +13,8 @@ class ToDoListContext {
     private var _tasks = [Task]()
     private var _categories = [Category]()
     //MARK: Repositary methods
-    func AddTask(_: Task) {
-        
+    func AddTask(_ newTask: Task) {
+        _tasks.append(newTask)
     }
     func UpdateTask(_: Task) {
         
