@@ -219,7 +219,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qlm-hK-XNG" userLabel="SubtaskView">
-                                        <rect key="frame" x="0.0" y="106" width="375" height="22"/>
+                                        <rect key="frame" x="0.0" y="106" width="375" height="26"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add a Subtask" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTm-L4-BST" userLabel="SubtaskLabel">
@@ -229,9 +229,10 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lxs-06-dds" userLabel="ChooseSubtaskButton">
-                                                <rect key="frame" x="8" y="0.0" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lxs-06-dds" userLabel="ChooseSubtaskButton">
+                                                <rect key="frame" x="4" y="-3" width="31" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="addSubaskButton"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -251,9 +252,10 @@
                                         <rect key="frame" x="0.0" y="200" width="375" height="65"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmU-Lf-BAF">
-                                                <rect key="frame" x="8" y="0.0" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmU-Lf-BAF">
+                                                <rect key="frame" x="6" y="-2" width="27" height="26"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="addTagButton"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lv-PC-fhy">
                                                 <rect key="frame" x="38" y="1" width="42" height="21"/>
@@ -273,9 +275,10 @@
                                         <rect key="frame" x="0.0" y="286" width="375" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sjO-eY-99D" userLabel="ChooseDateButton">
-                                                <rect key="frame" x="8" y="0.0" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sjO-eY-99D" userLabel="ChooseDateButton">
+                                                <rect key="frame" x="5" y="-1" width="28" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="pickDateButton"/>
                                                 <connections>
                                                     <segue destination="4QR-cd-kR5" kind="show" id="BUG-SP-2d9"/>
                                                 </connections>
@@ -303,17 +306,20 @@
                                                     <segue destination="5sa-7n-fR8" kind="unwind" unwindAction="unwindToTasksWithSender:" id="liL-wf-Kdk"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siR-xV-cP7" userLabel="CameraButton">
-                                                <rect key="frame" x="8" y="20" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siR-xV-cP7" userLabel="CameraButton">
+                                                <rect key="frame" x="6" y="19" width="27" height="24"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <state key="normal" image="takeCameraShotButton"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OcR-tm-O5h" userLabel="ImageButton">
-                                                <rect key="frame" x="38" y="20" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OcR-tm-O5h" userLabel="ImageButton">
+                                                <rect key="frame" x="37" y="20" width="24" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <state key="normal" image="pickImageButton"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMm-Ce-I6J" userLabel="FileButton">
-                                                <rect key="frame" x="68" y="20" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMm-Ce-I6J" userLabel="FileButton">
+                                                <rect key="frame" x="67" y="20" width="24" height="23"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <state key="normal" image="addAttachmentButton"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -784,12 +790,18 @@
         </scene>
     </scenes>
     <resources>
+        <image name="addAttachmentButton" width="24" height="23"/>
         <image name="addButton" width="36" height="35"/>
+        <image name="addSubaskButton" width="31" height="29"/>
         <image name="addTabBarButton" width="37" height="35"/>
+        <image name="addTagButton" width="27" height="26"/>
         <image name="calendarInactiveTabBarButton" width="29" height="29"/>
         <image name="dropDownButton" width="16" height="14"/>
+        <image name="pickDateButton" width="28" height="25"/>
+        <image name="pickImageButton" width="24" height="19"/>
         <image name="showGridButton" width="19" height="20"/>
         <image name="showListButton" width="20" height="20"/>
+        <image name="takeCameraShotButton" width="27" height="24"/>
         <image name="tasksActiveButton" width="32" height="31"/>
         <image name="underConstruction" width="75" height="75"/>
     </resources>
