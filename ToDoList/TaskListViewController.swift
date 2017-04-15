@@ -53,6 +53,15 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            ToDoListContext.instance.RemoveTask(tasks[indexPath.row])
+            taskListTableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
     //MARK: UIPopoverPresentationControllerDelegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none

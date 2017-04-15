@@ -16,7 +16,7 @@ class Task {
     var dueDate: Date
     var categories: [Category]
     var hashTags: [String]
-    var isReoccuring: Bool
+    var frequency: Task.Frequency
     init?(caption: String, description: String, dueDate: Date, categories: [Category], hashTags: [String]) {
         guard  !caption.isEmpty else {
             return nil
@@ -29,6 +29,11 @@ class Task {
         self.dueDate = dueDate
         self.categories = categories
         self.hashTags = hashTags
-        self.isReoccuring = false
+        self.frequency = .once
+    }
+    enum Frequency {
+        case daily
+        case weekly
+        case once
     }
 }

@@ -23,6 +23,7 @@
 		84F6ED7B1E8ED1CC00FDBAF5 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6ED7A1E8ED1CC00FDBAF5 /* TaskViewController.swift */; };
 		84F6ED7D1E92EB1200FDBAF5 /* DueDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6ED7C1E92EB1200FDBAF5 /* DueDateViewController.swift */; };
 		84F6ED7F1E94146300FDBAF5 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6ED7E1E94146300FDBAF5 /* Helper.swift */; };
+		84F6ED811E9AD2B800FDBAF5 /* CategoryPick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6ED801E9AD2B800FDBAF5 /* CategoryPick.swift */; };
 		84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF31181E82945500B43773 /* TaskListTableView.swift */; };
 		84FF311B1E82C48E00B43773 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		84F6ED7A1E8ED1CC00FDBAF5 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		84F6ED7C1E92EB1200FDBAF5 /* DueDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DueDateViewController.swift; sourceTree = "<group>"; };
 		84F6ED7E1E94146300FDBAF5 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		84F6ED801E9AD2B800FDBAF5 /* CategoryPick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryPick.swift; sourceTree = "<group>"; };
 		84FF31181E82945500B43773 /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListTableView.swift; sourceTree = "<group>"; };
 		84FF311A1E82C48E00B43773 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +121,7 @@
 				84F6ED7A1E8ED1CC00FDBAF5 /* TaskViewController.swift */,
 				84F6ED7C1E92EB1200FDBAF5 /* DueDateViewController.swift */,
 				84F6ED7E1E94146300FDBAF5 /* Helper.swift */,
+				84F6ED801E9AD2B800FDBAF5 /* CategoryPick.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F6ED811E9AD2B800FDBAF5 /* CategoryPick.swift in Sources */,
 				8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */,
 				84F6ED7F1E94146300FDBAF5 /* Helper.swift in Sources */,
 				84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */,
@@ -392,6 +396,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C6HVJ64EDS;
 				INFOPLIST_FILE = ToDoList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -407,6 +412,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C6HVJ64EDS;
 				INFOPLIST_FILE = ToDoList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";

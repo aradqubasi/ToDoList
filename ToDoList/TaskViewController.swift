@@ -13,11 +13,17 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Properties
     var quickTaskName: String?
     var taskDescription: String?
-    var taskCategories: [Category]?
+    var taskCategories: [Category] = []
     var taskHashTags: [String]?
     var taskDueDate: Date?
-    var taskIsReoccuring: Bool?
-    var task: Task?
+    var taskIsReoccuring: Task.Frequency?
+    var task: Task? {
+        get {
+            return CreateTask()
+        }
+    }
+    
+    var categoryButtons: [CategoryPick] = []
     
     @IBOutlet weak var taskNameEdit: UITextField!
     @IBOutlet weak var descriptionEdit: UITextField!
@@ -31,10 +37,13 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var fileButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DrawCategories()
         syncViewWithModel()
         taskNameEdit.delegate = self
         descriptionEdit.delegate = self
@@ -48,7 +57,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - UITextFieldDelegate Methods
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
+        syncViewWithModel()
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField === taskNameEdit {
@@ -57,6 +66,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
             taskDescription = textField.text
         }
         textField.resignFirstResponder()
+        syncViewWithModel()
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -66,7 +76,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Navigation
      
      @IBAction func unwindToTask(sender: UIStoryboardSegue) {
-     if let source = sender.source as? DueDateViewController, let dueDate = source.dueDate, let isReoccuring = source.isReoccuring {
+     if let source = sender.source as? DueDateViewController, let dueDate = source.dueDate, let isReoccuring = source.frequency {
             taskDueDate = dueDate
             taskIsReoccuring = isReoccuring
         }
@@ -82,7 +92,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Actions
     
     @IBAction func CreateButtonClick(_ sender: Any) {
-        task = CreateTask()
+        //task = CreateTask()
     }
     // MARK: - Private Methods
     private func syncViewWithModel() {
@@ -120,10 +130,75 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
             isValid = true
         }
         createButton.isEnabled = isValid
+        //
+        taskCategories.removeAll()
+        for categoryButton in categoryButtons {
+            if categoryButton.checked {
+                guard let catFromButton = categoryButton.category else {
+                    fatalError("category is empty")
+                }
+                taskCategories.append(catFromButton)
+            }
+        }
+    }
+    private func DrawCategories() {
+        let categories = ToDoListContext.instance.GetCategories()
+        for button in categoryButtons {
+            button.removeFromSuperview()
+        }
+        categoryButtons.removeAll()
+        var ttlLength: CGFloat = 0
+        for cat in categories {
+            let catButton = CategoryPick.init()
+            
+            //catButton.setTitle(cat.name, for: .disabled)
+            let title = NSAttributedString.init(string: cat.name , attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)])
+            catButton.setAttributedTitle(title, for: .disabled)
+            catButton.setTitleColor(UIColor.black, for: .disabled)
+            
+            catButton.setAttributedTitle(title, for: .focused)
+            catButton.setTitleColor(UIColor.black, for: .focused)
+            
+            catButton.setAttributedTitle(title, for: .highlighted)
+            catButton.setTitleColor(UIColor.black, for: .highlighted)
+            
+            catButton.setAttributedTitle(title, for: .selected)
+            catButton.setTitleColor(UIColor.white, for: .selected)
+            
+            catButton.setAttributedTitle(title, for: .normal)
+            catButton.setTitleColor(UIColor.black, for: .normal)
+            
+            let textSize = (cat.name as NSString).size(attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)]).width
+            catButton.widthAnchor.constraint(equalToConstant: textSize + 18).isActive = true
+            catButton.layer.masksToBounds = true
+            catButton.layer.cornerRadius = 8
+            catButton.titleEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+            //catButton.backgroundColor = cat.color
+            
+            catButton.addTarget(self, action: #selector(catButtonClick(button:)), for: .touchUpInside)
+            
+            catButton.setColor(for: cat)
+            
+            categoriesStackView.addArrangedSubview(catButton)
+            categoryButtons.append(catButton)
+            ttlLength += textSize + 18 + categoriesStackView.spacing
+        }
+        categoriesStackView.widthAnchor.constraint(equalToConstant: ttlLength).isActive = true
+        categoriesStackView.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        //categoriesStackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        //categoriesStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        //categoriesStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        //categoriesStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
     }
     private func CreateTask() -> Task? {
-        let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: [], hashTags: [])
-        task?.isReoccuring = taskIsReoccuring!
+        let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: [])
+        task?.frequency = taskIsReoccuring!
         return task
+    }
+    func catButtonClick(button: UIButton) {
+        guard  let pickButton = button as? CategoryPick else {
+            fatalError("CategoryPick expected but \(button) provided")
+        }
+        pickButton.check()
     }
 }

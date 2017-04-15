@@ -19,8 +19,13 @@ class ToDoListContext {
     func UpdateTask(_: Task) {
         
     }
-    func RemoveTask(_: Task) {
-        
+    func RemoveTask(_ taskToRemove: Task) {
+        for i in 0..<_tasks.count {
+            if _tasks[i] === taskToRemove {
+                _tasks.remove(at: i)
+                break
+            }
+        }
     }
     /*
     func GetTask(id: UUID) -> Task {
