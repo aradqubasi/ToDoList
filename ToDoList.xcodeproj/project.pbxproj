@@ -15,6 +15,8 @@
 		8429A7091E827AA100097602 /* ToDoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A7081E827AA100097602 /* ToDoListTests.swift */; };
 		8429A7141E827F0600097602 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A7131E827F0600097602 /* Task.swift */; };
 		846A5BCC1E8D593B0087A00C /* ToDoListContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A5BCB1E8D593B0087A00C /* ToDoListContext.swift */; };
+		84EC62151EA288BD00C27CC8 /* DeletableTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC62141EA288BD00C27CC8 /* DeletableTag.swift */; };
+		84EC62171EA363BF00C27CC8 /* DeletableTagDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC62161EA363BF00C27CC8 /* DeletableTagDelegate.swift */; };
 		84ED1A471E8A8F56008FD53D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A461E8A8F56008FD53D /* Category.swift */; };
 		84ED1A491E8A90C5008FD53D /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A481E8A90C5008FD53D /* CategoriesViewController.swift */; };
 		84ED1A4B1E8A98C2008FD53D /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED1A4A1E8A98C2008FD53D /* CategoryViewCell.swift */; };
@@ -51,6 +53,8 @@
 		8429A70A1E827AA100097602 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8429A7131E827F0600097602 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		846A5BCB1E8D593B0087A00C /* ToDoListContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoListContext.swift; sourceTree = "<group>"; };
+		84EC62141EA288BD00C27CC8 /* DeletableTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeletableTag.swift; sourceTree = "<group>"; };
+		84EC62161EA363BF00C27CC8 /* DeletableTagDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeletableTagDelegate.swift; sourceTree = "<group>"; };
 		84ED1A461E8A8F56008FD53D /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		84ED1A481E8A90C5008FD53D /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		84ED1A4A1E8A98C2008FD53D /* CategoryViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				84F6ED7C1E92EB1200FDBAF5 /* DueDateViewController.swift */,
 				84F6ED7E1E94146300FDBAF5 /* Helper.swift */,
 				84F6ED801E9AD2B800FDBAF5 /* CategoryPick.swift */,
+				84EC62141EA288BD00C27CC8 /* DeletableTag.swift */,
+				84EC62161EA363BF00C27CC8 /* DeletableTagDelegate.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F6ED811E9AD2B800FDBAF5 /* CategoryPick.swift in Sources */,
+				84EC62171EA363BF00C27CC8 /* DeletableTagDelegate.swift in Sources */,
 				8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */,
 				84F6ED7F1E94146300FDBAF5 /* Helper.swift in Sources */,
 				84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */,
@@ -251,6 +258,7 @@
 				8429A7141E827F0600097602 /* Task.swift in Sources */,
 				8429A6F41E827AA100097602 /* AppDelegate.swift in Sources */,
 				84F6ED791E8E976B00FDBAF5 /* TasksFiltersViewController.swift in Sources */,
+				84EC62151EA288BD00C27CC8 /* DeletableTag.swift in Sources */,
 				84ED1A491E8A90C5008FD53D /* CategoriesViewController.swift in Sources */,
 				84ED1A4D1E8BDFB6008FD53D /* CategoryViewController.swift in Sources */,
 				84F6ED7D1E92EB1200FDBAF5 /* DueDateViewController.swift in Sources */,

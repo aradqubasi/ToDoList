@@ -23,6 +23,15 @@ class CategoryPick: UIButton {
             self.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         }
     }
+    func setState(to: Bool){
+        checked = to
+        if to {
+            self.backgroundColor = category?.color
+        } else {
+            self.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        }
+    }
+    
     /*
     override open var isEnabled: Bool {
         didSet {

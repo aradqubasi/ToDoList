@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskViewController: UIViewController, UITextFieldDelegate {
+class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDelegate {
 
     //MARK: - Properties
     var quickTaskName: String?
@@ -44,6 +44,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         DrawCategories()
+        DrawTags()
         syncViewWithModel()
         taskNameEdit.delegate = self
         descriptionEdit.delegate = self
@@ -60,19 +61,21 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
         syncViewWithModel()
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === taskNameEdit {
             quickTaskName = textField.text
         } else if textField === descriptionEdit {
             taskDescription = textField.text
         }
-        textField.resignFirstResponder()
         syncViewWithModel()
-        return true
     }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
+    // MARK: - DeletableTag Delegate methods
+    func OnTagDelete(of: DeletableTag) {
+        of.removeFromSuperview()
     }
-    
     // MARK: - Navigation
      
      @IBAction func unwindToTask(sender: UIStoryboardSegue) {
@@ -131,15 +134,49 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
         }
         createButton.isEnabled = isValid
         //
-        taskCategories.removeAll()
         for categoryButton in categoryButtons {
-            if categoryButton.checked {
-                guard let catFromButton = categoryButton.category else {
-                    fatalError("category is empty")
-                }
-                taskCategories.append(catFromButton)
+            var toCheck: Bool = false
+            for category in taskCategories {
+                toCheck = toCheck || category === categoryButton.category!
             }
+            categoryButton.setState(to: toCheck)
         }
+        
+    }
+    private func DrawTags() {
+        /*
+        let tagLabel = UILabel.init()
+        tagLabel.translatesAutoresizingMaskIntoConstraints = false
+        tagLabel.textColor = UIColor.black
+        tagLabel.text = "Tag"
+        let font = ToDoListContext.instance.Font12()
+        tagLabel.font = font
+        tagLabel.widthAnchor.constraint(equalToConstant: ToDoListContext.instance.CalculateSize(for: "Tag", at: font)).isActive = true
+        let h = font.lineHeight
+        tagLabel.heightAnchor.constraint(equalToConstant: h).isActive = true
+        tagLabel.setContentCompressionResistancePriority(250, for: .horizontal)
+        
+        let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 30))
+        v.backgroundColor = UIColor.white
+        v.addSubview(tagLabel)
+        v.translatesAutoresizingMaskIntoConstraints = false
+        
+        tagLabel.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 12).isActive = true
+        tagLabel.topAnchor.constraint(equalTo: v.topAnchor, constant: 8).isActive = true
+        
+        tagsStackView.addArrangedSubview(v)
+        tagsStackView.translatesAutoresizingMaskIntoConstraints = false
+        */
+        
+        //let t = DeletableTag.init(tag: "Tag")
+        //t.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        //t.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                //tagsStackView.addSubview(t)
+        //tagsStackView.addArrangedSubview(t)
+        //t.attachTagLabel()
+        let tag = DeletableTag.init(tag: "Tag")
+        tag.delegate = self
+        tagsStackView.addArrangedSubview(tag)
     }
     private func DrawCategories() {
         let categories = ToDoListContext.instance.GetCategories()
@@ -181,14 +218,19 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
             
             categoriesStackView.addArrangedSubview(catButton)
             categoryButtons.append(catButton)
+            //let b = catButton.layer.bounds
             ttlLength += textSize + 18 + categoriesStackView.spacing
+            
+            
+
         }
-        categoriesStackView.widthAnchor.constraint(equalToConstant: ttlLength).isActive = true
-        categoriesStackView.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        //categoriesStackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        //categoriesStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        //categoriesStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        //categoriesStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        for constraint in categoriesStackView.constraints {
+            if constraint.firstAttribute == .width && constraint.constant != ttlLength {
+                constraint.isActive = false
+                categoriesStackView.widthAnchor.constraint(equalToConstant: ttlLength).isActive = true
+                break
+            }
+        }
     }
     private func CreateTask() -> Task? {
         let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: [])
@@ -200,5 +242,11 @@ class TaskViewController: UIViewController, UITextFieldDelegate {
             fatalError("CategoryPick expected but \(button) provided")
         }
         pickButton.check()
+        if pickButton.checked {
+            taskCategories.append(pickButton.category!)
+        } else {
+            let pos = taskCategories.index(where: { $0 === pickButton.category! })
+            taskCategories.remove(at: pos!)
+        }
     }
 }

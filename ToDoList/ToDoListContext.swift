@@ -12,6 +12,23 @@ class ToDoListContext {
     //MARK: Private Methods
     private var _tasks = [Task]()
     private var _categories = [Category]()
+    //MARK: - Helpers
+    func GetFont(size: CGFloat) -> UIFont {
+        guard let font = UIFont.init(name: "Avenir-Light", size: size) else {
+            fatalError("font Avenir-Light \(size) was not found")
+        }
+        return font
+    }
+    func Font12() -> UIFont {
+        return GetFont(size: 12)
+    }
+    func CalculateSize(for text: String, at font: UIFont) -> CGFloat {
+        let textSize = (text as NSString).size(attributes: [NSFontAttributeName: font]).width + 2
+        return textSize
+    }
+    var tdAqua: UIColor {
+        return UIColor(red: 28.0 / 255.0, green: 197.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
         _tasks.append(newTask)
