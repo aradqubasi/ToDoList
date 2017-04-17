@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDelegate {
+class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDelegate, TagConstructorDelegate {
 
     //MARK: - Properties
     var quickTaskName: String?
@@ -24,6 +24,8 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     }
     
     var categoryButtons: [CategoryPick] = []
+    var tagViews: [DeletableTag] = []
+    var tagAdder: TagConstructor = TagConstructor.init()
     
     @IBOutlet weak var taskNameEdit: UITextField!
     @IBOutlet weak var descriptionEdit: UITextField!
@@ -43,6 +45,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        taskHashTags = ["New", "Oppotunity", "Growth"]
         DrawCategories()
         DrawTags()
         syncViewWithModel()
@@ -75,6 +78,16 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     // MARK: - DeletableTag Delegate methods
     func OnTagDelete(of: DeletableTag) {
         of.removeFromSuperview()
+    }
+    // MARK: - TagConstructor Delegate Methods
+    func pushTag(tag: DeletableTag, creator: TagConstructor) {
+        tagViews.append(tag)
+        tag.delegate = self
+        if taskHashTags == nil {
+            taskHashTags = []
+        }
+        taskHashTags?.append(tag.tagName)
+        syncViewWithModel()
     }
     // MARK: - Navigation
      
@@ -144,39 +157,33 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         
     }
     private func DrawTags() {
-        /*
-        let tagLabel = UILabel.init()
-        tagLabel.translatesAutoresizingMaskIntoConstraints = false
-        tagLabel.textColor = UIColor.black
-        tagLabel.text = "Tag"
-        let font = ToDoListContext.instance.Font12()
-        tagLabel.font = font
-        tagLabel.widthAnchor.constraint(equalToConstant: ToDoListContext.instance.CalculateSize(for: "Tag", at: font)).isActive = true
-        let h = font.lineHeight
-        tagLabel.heightAnchor.constraint(equalToConstant: h).isActive = true
-        tagLabel.setContentCompressionResistancePriority(250, for: .horizontal)
+        for tagView in tagViews {
+            tagView.removeFromSuperview()
+        }
+        var newLength: CGFloat = 0
+        if taskHashTags != nil {
+            for hashTag in taskHashTags! {
+                let tag = DeletableTag.init(tag: hashTag)
+                tag.delegate = self
+                tagsStackView.addArrangedSubview(tag)
+                tagViews.append(tag)
+                newLength += tag.width + tagsStackView.spacing
+            }
+            //newLength -= tagsStackView.spacing
+        }
         
-        let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 30))
-        v.backgroundColor = UIColor.white
-        v.addSubview(tagLabel)
-        v.translatesAutoresizingMaskIntoConstraints = false
+        let newTag = TagConstructor.init()
+        tagsStackView.addArrangedSubview(newTag)
+        newLength += newTag.width
         
-        tagLabel.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 12).isActive = true
-        tagLabel.topAnchor.constraint(equalTo: v.topAnchor, constant: 8).isActive = true
-        
-        tagsStackView.addArrangedSubview(v)
-        tagsStackView.translatesAutoresizingMaskIntoConstraints = false
-        */
-        
-        //let t = DeletableTag.init(tag: "Tag")
-        //t.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        //t.heightAnchor.constraint(equalToConstant: 40).isActive = true
-                //tagsStackView.addSubview(t)
-        //tagsStackView.addArrangedSubview(t)
-        //t.attachTagLabel()
-        let tag = DeletableTag.init(tag: "Tag")
-        tag.delegate = self
-        tagsStackView.addArrangedSubview(tag)
+        var toRemove: [NSLayoutConstraint] = []
+        for constraint in tagsStackView.constraints {
+            if constraint.firstAttribute == .width {
+                toRemove.append(constraint)
+            }
+        }
+        tagsStackView.removeConstraints(toRemove)
+        tagsStackView.widthAnchor.constraint(equalToConstant: newLength).isActive = true
     }
     private func DrawCategories() {
         let categories = ToDoListContext.instance.GetCategories()

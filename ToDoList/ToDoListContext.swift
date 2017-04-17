@@ -29,6 +29,9 @@ class ToDoListContext {
     var tdAqua: UIColor {
         return UIColor(red: 28.0 / 255.0, green: 197.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
     }
+    var tdSilver: UIColor {
+        return UIColor(red: 197.0 / 255.0, green: 196.0 / 255.0, blue: 201.0 / 255.0, alpha: 1.0)
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
         _tasks.append(newTask)
