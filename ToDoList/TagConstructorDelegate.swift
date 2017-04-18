@@ -8,5 +8,5 @@
 
 import Foundation
 protocol TagConstructorDelegate {
-    func pushTag(tag: DeletableTag, creator: TagConstructor)
+    func pushTag(tag: String)
 }

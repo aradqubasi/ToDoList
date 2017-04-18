@@ -14,7 +14,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     var quickTaskName: String?
     var taskDescription: String?
     var taskCategories: [Category] = []
-    var taskHashTags: [String]?
+    var taskHashTags: [String] = []
     var taskDueDate: Date?
     var taskIsReoccuring: Task.Frequency?
     var task: Task? {
@@ -45,7 +45,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        taskHashTags = ["New", "Oppotunity", "Growth"]
+        //taskHashTags = ["New", "Oppotunity", "Growth"]
         DrawCategories()
         DrawTags()
         syncViewWithModel()
@@ -77,16 +77,14 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     }
     // MARK: - DeletableTag Delegate methods
     func OnTagDelete(of: DeletableTag) {
-        of.removeFromSuperview()
+        taskHashTags.remove(at: (taskHashTags.index(where: { return $0 == of.tagName }))!)
+        syncViewWithModel()
     }
     // MARK: - TagConstructor Delegate Methods
-    func pushTag(tag: DeletableTag, creator: TagConstructor) {
-        tagViews.append(tag)
-        tag.delegate = self
-        if taskHashTags == nil {
-            taskHashTags = []
+    func pushTag(tag: String) {
+        if taskHashTags.index(where: { return $0 == tag }) == nil {
+            taskHashTags.append(tag)
         }
-        taskHashTags?.append(tag.tagName)
         syncViewWithModel()
     }
     // MARK: - Navigation
@@ -96,7 +94,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             taskDueDate = dueDate
             taskIsReoccuring = isReoccuring
         }
-     syncViewWithModel()
+        syncViewWithModel()
      }
     /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -154,28 +152,32 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             }
             categoryButton.setState(to: toCheck)
         }
-        
-    }
-    private func DrawTags() {
+        //
+        var newTagViews: [DeletableTag] = []
         for tagView in tagViews {
-            tagView.removeFromSuperview()
-        }
-        var newLength: CGFloat = 0
-        if taskHashTags != nil {
-            for hashTag in taskHashTags! {
-                let tag = DeletableTag.init(tag: hashTag)
-                tag.delegate = self
-                tagsStackView.addArrangedSubview(tag)
-                tagViews.append(tag)
-                newLength += tag.width + tagsStackView.spacing
+            if taskHashTags.index(where: { return $0 == tagView.tagName}) == nil {
+                tagView.removeFromSuperview()
+            } else {
+                newTagViews.append(tagView)
             }
-            //newLength -= tagsStackView.spacing
         }
         
-        let newTag = TagConstructor.init()
-        tagsStackView.addArrangedSubview(newTag)
-        newLength += newTag.width
+        tagViews = newTagViews
+        for tag in taskHashTags {
+            if tagViews.index(where: { return $0.tagName == tag }) == nil {
+                let newTag = DeletableTag.init(tag: tag)
+                newTag.delegate = self
+                tagViews.append(newTag)
+                tagsStackView.insertArrangedSubview(newTag, at: tagsStackView.arrangedSubviews.count - 1)
+            }
+        }
         
+        var ttlWidth: CGFloat = 0
+        for tagView in tagViews {
+            ttlWidth += tagView.width
+            ttlWidth += tagsStackView.spacing
+        }
+        ttlWidth += tagAdder.width
         var toRemove: [NSLayoutConstraint] = []
         for constraint in tagsStackView.constraints {
             if constraint.firstAttribute == .width {
@@ -183,7 +185,24 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             }
         }
         tagsStackView.removeConstraints(toRemove)
-        tagsStackView.widthAnchor.constraint(equalToConstant: newLength).isActive = true
+        tagsStackView.widthAnchor.constraint(equalToConstant: ttlWidth).isActive = true
+    }
+    private func DrawTags() {
+        for tagView in tagViews {
+            tagView.removeFromSuperview()
+        }
+        tagViews.removeAll()
+        tagAdder.removeFromSuperview()
+        var toRemove: [NSLayoutConstraint] = []
+        for constraint in tagsStackView.constraints {
+            if constraint.firstAttribute == .width {
+                toRemove.append(constraint)
+            }
+        }
+        tagsStackView.removeConstraints(toRemove)
+        tagsStackView.addArrangedSubview(tagAdder)
+        tagAdder.delegate = self
+        tagsStackView.widthAnchor.constraint(equalToConstant: tagAdder.width).isActive = true
     }
     private func DrawCategories() {
         let categories = ToDoListContext.instance.GetCategories()

@@ -112,8 +112,7 @@ class TagConstructor: UIView, UITextFieldDelegate {
     private func CreateTag(name: String?) {
         if delegate != nil && name != nil {
             let d = delegate!
-            let newTag = DeletableTag.init(tag: name!)
-            d.pushTag(tag: newTag, creator: self)
+            d.pushTag(tag: name!)
         }
         newTagEdit?.text = ""
     }
