@@ -22,6 +22,9 @@ class ToDoListContext {
     func Font12() -> UIFont {
         return GetFont(size: 12)
     }
+    func SelectableCategoryFont() -> UIFont {
+        return GetFont(size: 13)
+    }
     func CalculateSize(for text: String, at font: UIFont) -> CGFloat {
         let textSize = (text as NSString).size(attributes: [NSFontAttributeName: font]).width + 2
         return textSize
@@ -31,6 +34,21 @@ class ToDoListContext {
     }
     var tdSilver: UIColor {
         return UIColor(red: 197.0 / 255.0, green: 196.0 / 255.0, blue: 201.0 / 255.0, alpha: 1.0)
+    }
+    var tdRosyPink: UIColor {
+        return UIColor(red: 248.0 / 255.0, green: 111.0 / 255.0, blue: 117.0 / 255.0, alpha: 1.0)
+    }
+    var tdBlush: UIColor {
+        return UIColor(red: 246.0 / 255.0, green: 169.0 / 255.0, blue: 118.0 / 255.0, alpha: 1.0)
+    }
+    var tdLightTeal: UIColor {
+        return UIColor(red: 103.0 / 255.0, green: 227.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
+    }
+    var tdSeafoamBlue: UIColor {
+        return UIColor(red: 101.0 / 255.0, green: 199.0 / 255.0, blue: 222.0 / 255.0, alpha: 1.0)
+    }
+    var tdSandy: UIColor {
+        return UIColor(red: 244.0 / 255.0, green: 219.0 / 255.0, blue: 112.0 / 255.0, alpha: 1.0)
     }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
@@ -82,22 +100,22 @@ class ToDoListContext {
         let relationshipCat = UIImage.init(named: "relationshipCat", in: bundle, compatibleWith: nil)
         let foodCat = UIImage.init(named: "foodCat", in: bundle, compatibleWith: nil)
         
-        guard let cat1 = Category.init(name: "Work", icon: workCat, color: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)) else {
+        guard let cat1 = Category.init(name: "Work", icon: workCat, color: self.tdRosyPink) else {
             fatalError("can't work")
         }
-        guard let cat2 = Category.init(name: "Learn", icon: learnCat, color: #colorLiteral(red: 0.9411764741, green: 0.4980392158, blue: 0.3529411852, alpha: 1)) else {
+        guard let cat2 = Category.init(name: "Learn", icon: learnCat, color: self.tdSeafoamBlue) else {
             fatalError("can't learn")
         }
         guard let cat3 = Category.init(name: "Sport", icon: sportCat, color: #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)) else {
             fatalError("can't do sport")
         }
-        guard let cat4 = Category.init(name: "Health", icon: healthCat, color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)) else {
+        guard let cat4 = Category.init(name: "Health", icon: healthCat, color: self.tdLightTeal) else {
             fatalError("no health")
         }
-        guard let cat5 = Category.init(name: "Relationship", icon: relationshipCat, color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)) else {
+        guard let cat5 = Category.init(name: "Relationship", icon: relationshipCat, color: self.tdBlush) else {
             fatalError("no relationship")
         }
-        guard let cat6 = Category.init(name: "Food", icon: foodCat, color: #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)) else {
+        guard let cat6 = Category.init(name: "Food", icon: foodCat, color: self.tdSandy) else {
             fatalError("no food")
         }
         

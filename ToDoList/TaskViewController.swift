@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDelegate, TagConstructorDelegate {
+class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDelegate, TagConstructorDelegate, SelectableCategoryDelegate {
 
     //MARK: - Properties
     var quickTaskName: String?
@@ -23,7 +23,8 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         }
     }
     
-    var categoryButtons: [CategoryPick] = []
+    //var categoryButtons: [CategoryPick] = []
+    var categoryControls: [SelectableCategory] = []
     var tagViews: [DeletableTag] = []
     var tagAdder: TagConstructor = TagConstructor.init()
     
@@ -87,6 +88,15 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         }
         syncViewWithModel()
     }
+    // MARK: - SelectableCategory Delegate Methods
+    func onCategoryClick(sender: SelectableCategory) {
+        if sender.isChecked {
+            taskCategories.append(sender.model)
+        } else {
+            taskCategories.remove(at: taskCategories.index(where: { return $0 === sender.model })!)
+        }
+        syncViewWithModel()
+    }
     // MARK: - Navigation
      
      @IBAction func unwindToTask(sender: UIStoryboardSegue) {
@@ -145,6 +155,11 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         }
         createButton.isEnabled = isValid
         //
+        for categoryControl in categoryControls {
+            let state = taskCategories.index(where: { return $0 === categoryControl.model }) != nil
+            categoryControl.setState(to: state)
+        }
+        /*
         for categoryButton in categoryButtons {
             var toCheck: Bool = false
             for category in taskCategories {
@@ -152,6 +167,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             }
             categoryButton.setState(to: toCheck)
         }
+        */
         //
         var newTagViews: [DeletableTag] = []
         for tagView in tagViews {
@@ -206,6 +222,31 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     }
     private func DrawCategories() {
         let categories = ToDoListContext.instance.GetCategories()
+        for categoryControl in categoryControls {
+            categoryControl.removeFromSuperview()
+        }
+        categoryControls.removeAll()
+        
+        var ttlWidth: CGFloat = 0
+        for category in categories {
+            let categoryControl = SelectableCategory.init(of: category, state: false)
+            categoriesStackView.addArrangedSubview(categoryControl)
+            ttlWidth += categoryControl.width
+            ttlWidth += categoriesStackView.spacing
+        }
+        
+        ttlWidth -= categoriesStackView.spacing
+        var toDelete: [NSLayoutConstraint] = []
+        for constraint in categoriesStackView.constraints {
+            if constraint.firstAttribute == .width {
+                toDelete.append(constraint)
+            }
+        }
+        categoriesStackView.removeConstraints(toDelete)
+        categoriesStackView.widthAnchor.constraint(equalToConstant: ttlWidth).isActive = true
+        
+        /*
+        let categories = ToDoListContext.instance.GetCategories()
         for button in categoryButtons {
             button.removeFromSuperview()
         }
@@ -257,6 +298,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
                 break
             }
         }
+        */
     }
     private func CreateTask() -> Task? {
         let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: [])
