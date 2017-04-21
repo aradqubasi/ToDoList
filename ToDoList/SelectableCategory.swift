@@ -33,11 +33,14 @@ class SelectableCategory: UIControl {
     
     var width: CGFloat {
         get {
+            return edgeToPoint + pointWidth + pointToLabel + labelWidth + labelToEdge
+            /*
             if isSelected {
                 return edgeToLabel + labelWidth + labelToEdge
             } else {
                 return edgeToPoint + pointWidth + pointToLabel + labelWidth + labelToEdge
             }
+            */
         }
     }
     var height: CGFloat {
