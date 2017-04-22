@@ -50,6 +50,9 @@ class ToDoListContext {
     var tdSandy: UIColor {
         return UIColor(red: 244.0 / 255.0, green: 219.0 / 255.0, blue: 112.0 / 255.0, alpha: 1.0)
     }
+    var tdPaleGrey: UIColor {
+        return UIColor(red: 230.0 / 255.0, green: 232.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
         _tasks.append(newTask)

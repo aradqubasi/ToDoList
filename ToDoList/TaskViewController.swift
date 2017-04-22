@@ -233,6 +233,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             categoriesStackView.addArrangedSubview(categoryControl)
             ttlWidth += categoryControl.width
             ttlWidth += categoriesStackView.spacing
+            categoryControl.delegate = self
         }
         
         ttlWidth -= categoriesStackView.spacing

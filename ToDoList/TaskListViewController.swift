@@ -23,11 +23,14 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         super.viewDidLoad()
         
         //init task list table view
-        //taskListTableView.delegate = self;
+        //taskListTableView.delegate = self
         taskListTableView.dataSource = self
+        taskListTableView.layoutMargins = .zero
+        taskListTableView.separatorInset = .zero
         //taskListTableView.tasks = ToDoListContext.instance.GetTasks()
         taskNameEdit.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
+        taskNameEdit.layer.borderColor = ToDoListContext.instance.tdPaleGrey.cgColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +48,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         //cell.isDoneSwitch.isOn = task.isDone
         //cell.taskCaptionLabel.text = task.caption
         //cell.dueDateLabel.text = String(describing: task.dueDate)
+        cell.layoutMargins = .zero
         return cell
     }
     func numberOfSections(in tableView: UITableView) -> Int {
