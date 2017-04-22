@@ -100,7 +100,7 @@ class SelectableCategory: UIControl {
         addSubview(label)
         
         label.topAnchor.constraint(equalTo: self.topAnchor, constant: topToLabel).isActive = true
-        label.leadingAnchor.constraint(equalTo: point!.leadingAnchor, constant: pointToLabel).isActive = true
+        label.leadingAnchor.constraint(equalTo: point!.trailingAnchor, constant: pointToLabel).isActive = true
         
         self.label = label
     }
@@ -121,11 +121,13 @@ class SelectableCategory: UIControl {
         label?.textColor = fontColor
     }
     func onClick(sender: SelectableCategory) {
-        isChecked = !isChecked
-        paintByState()
         if let d = delegate {
+            isChecked = d.onStateChange(from: isChecked)
             d.onCategoryClick(sender: self)
+        } else {
+            isChecked = !isChecked
         }
+        paintByState()
     }
     func setState(to: Bool) {
         isChecked = to

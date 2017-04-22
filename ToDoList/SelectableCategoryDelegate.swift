@@ -9,4 +9,10 @@
 import Foundation
 protocol SelectableCategoryDelegate {
     func onCategoryClick(sender: SelectableCategory)
+    func onStateChange(from: Bool) -> Bool
+}
+extension SelectableCategoryDelegate {
+    func onStateChange(from: Bool) -> Bool {
+        return !from
+    }
 }

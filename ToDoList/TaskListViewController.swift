@@ -45,9 +45,6 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         }
         let task = tasks[indexPath.row]
         cell.setCellValue(forTask: task)
-        //cell.isDoneSwitch.isOn = task.isDone
-        //cell.taskCaptionLabel.text = task.caption
-        //cell.dueDateLabel.text = String(describing: task.dueDate)
         cell.layoutMargins = .zero
         return cell
     }

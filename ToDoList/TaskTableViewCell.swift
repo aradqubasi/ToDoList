@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskTableViewCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell, SelectableCategoryDelegate {
     //MARK: constants
     public static let identifier = "TaskTableViewCell"
     //MARK: Properties
@@ -17,9 +17,9 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var categoriesStack: UIStackView!
-    var categoryLabels = [UILabel]()
+    //var categoryLabels = [UILabel]()
     //@IBOutlet weak var dueDateLabel: UILabel!
-    
+    var categories: [SelectableCategory] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,7 +31,14 @@ class TaskTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+    // MARK: - SelectableCategoryDelegate Methods
+    func onCategoryClick(sender: SelectableCategory) {
+        
+    }
+    func onStateChange(from: Bool) -> Bool {
+        return from
+    }
+    // MARK: - Public functions
     func setCellValue(forTask task: Task) {
         //set caption
         let captionText = NSMutableAttributedString(string: task.caption)
@@ -69,6 +76,33 @@ class TaskTableViewCell: UITableViewCell {
         }
         dueDateLabel.isEnabled = !task.isCancelled
         //set categoriesStack
+        for category in categories {
+            category.removeFromSuperview()
+        }
+        categories.removeAll()
+        var ttlLength: CGFloat = 0
+        for category in task.categories {
+            let categoryLabel = SelectableCategory.init(of: category, state: true)
+            categoryLabel.delegate = self
+            categoriesStack.addArrangedSubview(categoryLabel)
+            categories.append(categoryLabel)
+            ttlLength += categoryLabel.width
+            ttlLength += categoriesStack.spacing
+            
+        }
+        if ttlLength != 0 {
+            ttlLength -= categoriesStack.spacing
+        }
+        var widthConstrains: [NSLayoutConstraint] = []
+        for constraint in categoriesStack.constraints {
+            if constraint.firstAttribute == .width {
+                widthConstrains.append(constraint)
+            }
+        }
+        categoriesStack.removeConstraints(widthConstrains)
+        categoriesStack.widthAnchor.constraint(equalToConstant: ttlLength)
+        
+        /*
         for catLabel in categoryLabels {
             catLabel.removeFromSuperview()
         }
@@ -88,5 +122,6 @@ class TaskTableViewCell: UITableViewCell {
         }
         let trailingLabel = UILabel()
         categoriesStack.addArrangedSubview(trailingLabel)
+        */
     }
 }

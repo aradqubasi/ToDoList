@@ -134,21 +134,34 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="myr-uv-olV" userLabel="Categories">
-                                                    <rect key="frame" x="129.5" y="16" width="119" height="32"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yp0-RO-1Rd">
+                                                    <rect key="frame" x="129.5" y="16" width="127.5" height="32"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="myr-uv-olV" userLabel="Categories">
+                                                            <rect key="frame" x="0.0" y="0.0" width="119" height="32"/>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="32" id="QVH-is-vJB"/>
+                                                                <constraint firstAttribute="width" constant="119" id="W0J-dW-jR5"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="QVH-is-vJB"/>
+                                                        <constraint firstItem="myr-uv-olV" firstAttribute="leading" secondItem="yp0-RO-1Rd" secondAttribute="leading" id="3c5-bv-wXj"/>
+                                                        <constraint firstAttribute="height" constant="32" id="VU3-cX-t57"/>
+                                                        <constraint firstAttribute="trailing" secondItem="myr-uv-olV" secondAttribute="trailing" id="gpV-D2-NZC"/>
+                                                        <constraint firstItem="myr-uv-olV" firstAttribute="top" secondItem="yp0-RO-1Rd" secondAttribute="top" id="lI2-c9-sN5"/>
+                                                        <constraint firstAttribute="bottom" secondItem="myr-uv-olV" secondAttribute="bottom" id="ouj-oX-k6C"/>
                                                     </constraints>
-                                                </stackView>
+                                                </scrollView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="yp0-RO-1Rd" firstAttribute="top" secondItem="BNL-gv-rxO" secondAttribute="top" constant="16" id="6Sj-GC-Rdk"/>
                                                 <constraint firstItem="Xcr-LT-sPY" firstAttribute="top" secondItem="BNL-gv-rxO" secondAttribute="top" constant="22" id="6kh-U4-SRS"/>
-                                                <constraint firstItem="Xcr-LT-sPY" firstAttribute="leading" secondItem="myr-uv-olV" secondAttribute="trailing" constant="16" id="EWW-Lc-BqS"/>
-                                                <constraint firstItem="myr-uv-olV" firstAttribute="top" secondItem="BNL-gv-rxO" secondAttribute="top" constant="16" id="MGT-5X-akx"/>
-                                                <constraint firstItem="myr-uv-olV" firstAttribute="leading" secondItem="dH9-YV-wte" secondAttribute="trailing" constant="16" id="PXd-cP-dzV"/>
                                                 <constraint firstItem="h5A-fq-XkU" firstAttribute="leading" secondItem="BNL-gv-rxO" secondAttribute="leading" constant="16" id="SLx-cA-gpP"/>
                                                 <constraint firstItem="dH9-YV-wte" firstAttribute="leading" secondItem="h5A-fq-XkU" secondAttribute="trailing" constant="23" id="Zfr-Ej-nQL"/>
+                                                <constraint firstItem="Xcr-LT-sPY" firstAttribute="leading" secondItem="yp0-RO-1Rd" secondAttribute="trailing" constant="8" id="bVb-0F-svC"/>
+                                                <constraint firstItem="yp0-RO-1Rd" firstAttribute="leading" secondItem="dH9-YV-wte" secondAttribute="trailing" constant="16" id="dAI-Yc-w2F"/>
                                                 <constraint firstItem="dH9-YV-wte" firstAttribute="top" secondItem="BNL-gv-rxO" secondAttribute="top" constant="20" id="iF6-zi-Opr"/>
                                                 <constraint firstItem="h5A-fq-XkU" firstAttribute="top" secondItem="BNL-gv-rxO" secondAttribute="top" constant="16" id="phD-Le-siI"/>
                                                 <constraint firstAttribute="trailing" secondItem="Xcr-LT-sPY" secondAttribute="trailing" constant="13" id="pl5-gq-wVg"/>
@@ -243,7 +256,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y07-wi-Y2W" userLabel="NameToDescSeparator">
                                 <rect key="frame" x="0.0" y="146" width="375" height="1"/>
@@ -259,7 +272,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wzo-A6-Xwx" userLabel="DescToSubSeparator">
                                 <rect key="frame" x="0.0" y="210" width="375" height="1"/>
@@ -402,7 +415,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMf-Cv-rCu" userLabel="TagsScrollView">
-                                <rect key="frame" x="64" y="399" width="298" height="32"/>
+                                <rect key="frame" x="64" y="399" width="298" height="33"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lFs-gz-G0P" userLabel="TagsStackView">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="32"/>
@@ -413,7 +426,7 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="52n-ui-8Vr"/>
+                                    <constraint firstAttribute="height" constant="33" id="52n-ui-8Vr"/>
                                     <constraint firstItem="lFs-gz-G0P" firstAttribute="leading" secondItem="dMf-Cv-rCu" secondAttribute="leading" id="ECe-gf-xCh"/>
                                     <constraint firstItem="lFs-gz-G0P" firstAttribute="top" secondItem="dMf-Cv-rCu" secondAttribute="top" id="MPD-6l-QLe"/>
                                     <constraint firstAttribute="bottom" secondItem="lFs-gz-G0P" secondAttribute="bottom" id="TDw-Cg-dVp"/>
