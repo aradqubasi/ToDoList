@@ -53,6 +53,10 @@ class ToDoListContext {
     var tdPaleGrey: UIColor {
         return UIColor(red: 230.0 / 255.0, green: 232.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
     }
+    // MARK: - Segue Identifiers
+    var segueId_tasksToTaskEdit: String {
+        return "tasksToTaskEdit"
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
         _tasks.append(newTask)

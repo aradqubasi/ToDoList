@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskListViewController: UIViewController, UITableViewDataSource, UIPopoverPresentationControllerDelegate, UITextFieldDelegate {
+class TaskListViewController: UIViewController, UITableViewDataSource, UIPopoverPresentationControllerDelegate, UITextFieldDelegate, UITableViewDelegate {
     //MARK: Properties
     var tasks: [Task] {
         get {
@@ -23,7 +23,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         super.viewDidLoad()
         
         //init task list table view
-        //taskListTableView.delegate = self
+        taskListTableView.delegate = self
         taskListTableView.dataSource = self
         taskListTableView.layoutMargins = .zero
         taskListTableView.separatorInset = .zero
@@ -62,6 +62,21 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
             ToDoListContext.instance.RemoveTask(tasks[indexPath.row])
             taskListTableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    // MARK: - TableViewDelegateMethods
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        //<#T##(UITableViewRowAction, IndexPath) -> Void#>
+        let delete = UITableViewRowAction.init(style: .destructive, title: "Delete") {
+            action, index in
+            ToDoListContext.instance.RemoveTask(self.tasks[indexPath.row])
+            self.taskListTableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        let edit = UITableViewRowAction.init(style: .normal, title: " Edit ", handler: {
+            action, index in
+            self.performSegue(withIdentifier: ToDoListContext.instance.segueId_tasksToTaskEdit, sender: self)
+            self.taskListTableView.setEditing(false, animated: false)
+        })
+        return [delete, edit]
     }
     //MARK: UIPopoverPresentationControllerDelegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
