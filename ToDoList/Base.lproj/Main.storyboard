@@ -234,7 +234,7 @@
         <!--TaskEdit-->
         <scene sceneID="HIw-T0-t2v">
             <objects>
-                <viewController title="TaskEdit" id="aJs-go-3A5" userLabel="TaskEdit" sceneMemberID="viewController">
+                <viewController title="TaskEdit" id="aJs-go-3A5" userLabel="TaskEdit" customClass="TaskEditViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="riG-hy-nBv"/>
                         <viewControllerLayoutGuide type="bottom" id="Kh1-Bv-4Ba"/>
@@ -439,7 +439,6 @@
                                             <constraint firstAttribute="width" constant="32" id="1SD-Lx-J8c"/>
                                             <constraint firstAttribute="height" constant="32" id="G5W-S4-C6d"/>
                                         </constraints>
-                                        <state key="normal" image="check"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9W-Li-AJs">
                                         <rect key="frame" x="40" y="12" width="32" height="32"/>
@@ -447,8 +446,6 @@
                                             <constraint firstAttribute="width" constant="32" id="ljh-hO-CZr"/>
                                             <constraint firstAttribute="height" constant="32" id="wog-FP-WXu"/>
                                         </constraints>
-                                        <state key="normal" image="storeHeart"/>
-                                        <state key="selected" image="rubyHeart"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wCs-Ev-LOr">
                                         <rect key="frame" x="80" y="12" width="32" height="32"/>
@@ -480,6 +477,17 @@
                             </view>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="categoriesStack" destination="t0W-ds-Vj9" id="QTJ-ZM-UCQ"/>
+                        <outlet property="checkButton" destination="Rik-Dc-QYA" id="k0f-1f-RMa"/>
+                        <outlet property="dateLabel" destination="jQ5-Gm-03d" id="KOd-qm-Bxo"/>
+                        <outlet property="deleteButton" destination="vPV-o9-ua2" id="0vn-4j-Peh"/>
+                        <outlet property="descLabel" destination="ERb-QI-gKX" id="8oB-5o-QpY"/>
+                        <outlet property="editButton" destination="wCs-Ev-LOr" id="ddg-me-KCH"/>
+                        <outlet property="likeButton" destination="N9W-Li-AJs" id="ccJ-0V-NIW"/>
+                        <outlet property="nameLabel" destination="h5p-dC-DHz" id="b06-pg-m4k"/>
+                        <outlet property="tagsStack" destination="ux5-Bs-2yw" id="PEd-Eq-LXH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CRO-fX-4KF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1251,15 +1259,12 @@
         <image name="bell" width="21" height="26"/>
         <image name="calendarInactiveTabBarButton" width="29" height="29"/>
         <image name="categories" width="31" height="35"/>
-        <image name="check" width="49" height="50"/>
         <image name="dropDownButton" width="16" height="14"/>
         <image name="pencil" width="49" height="50"/>
         <image name="pickDateButton" width="28" height="25"/>
         <image name="pickImageButton" width="24" height="19"/>
-        <image name="rubyHeart" width="50" height="49"/>
         <image name="showGridButton" width="19" height="20"/>
         <image name="showListButton" width="20" height="20"/>
-        <image name="storeHeart" width="50" height="49"/>
         <image name="takeCameraShotButton" width="27" height="24"/>
         <image name="tasksActiveButton" width="32" height="31"/>
         <image name="trashcan" width="49" height="50"/>

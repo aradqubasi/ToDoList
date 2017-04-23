@@ -15,6 +15,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
             return ToDoListContext.instance.GetTasks()
         }
     }
+    var taskIndexToEdit: IndexPath?
     @IBOutlet weak var taskListTableView: TaskListTableView!
     @IBOutlet weak var filtersDropdownButton: UIButton!
     @IBOutlet weak var taskNameEdit: UITextField!
@@ -65,7 +66,6 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     }
     // MARK: - TableViewDelegateMethods
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        //<#T##(UITableViewRowAction, IndexPath) -> Void#>
         let delete = UITableViewRowAction.init(style: .destructive, title: "Delete") {
             action, index in
             ToDoListContext.instance.RemoveTask(self.tasks[indexPath.row])
@@ -73,6 +73,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         }
         let edit = UITableViewRowAction.init(style: .normal, title: " Edit ", handler: {
             action, index in
+            self.taskIndexToEdit = index
             self.performSegue(withIdentifier: ToDoListContext.instance.segueId_tasksToTaskEdit, sender: self)
             self.taskListTableView.setEditing(false, animated: false)
         })
@@ -116,6 +117,20 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
                 fatalError("unexpected destanation - \(segue.destination) instead of TaskViewController")
             }
             taskView.quickTaskName = taskNameEdit.text
+        } else if segue.identifier == ToDoListContext.instance.segueId_tasksToTaskEdit {
+            guard let taskEdit = segue.destination as? TaskEditViewController else {
+                fatalError("unexpected destanation - \(segue.destination) instead of TaskEditViewController")
+            }
+            guard let index = taskIndexToEdit else {
+                fatalError("no selected row")
+            }
+            guard let selected = taskListTableView.cellForRow(at: index) as? TaskTableViewCell else {
+                fatalError("tryring to edit row at table where none was selected")
+            }
+            guard let task = selected.task else {
+                fatalError("task instance is not assigned to table cell view")
+            }
+            taskEdit.task = task
         }
     }
     @IBAction func unwindToTasks(sender: UIStoryboardSegue) {

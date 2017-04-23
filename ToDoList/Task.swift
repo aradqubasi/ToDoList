@@ -17,6 +17,7 @@ class Task {
     var categories: [Category]
     var hashTags: [String]
     var frequency: Task.Frequency
+    var isLiked: Bool
     init?(caption: String, description: String, dueDate: Date, categories: [Category], hashTags: [String]) {
         guard  !caption.isEmpty else {
             return nil
@@ -30,6 +31,7 @@ class Task {
         self.categories = categories
         self.hashTags = hashTags
         self.frequency = .once
+        self.isLiked = false
     }
     enum Frequency {
         case daily

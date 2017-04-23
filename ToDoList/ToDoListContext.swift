@@ -22,6 +22,12 @@ class ToDoListContext {
     func Font12() -> UIFont {
         return GetFont(size: 12)
     }
+    var FontForSimpleTag: UIFont {
+        guard let font = UIFont.init(name: "Avenir-Book", size: 12) else {
+            fatalError("font Avenir-Book 12 was not found")
+        }
+        return font
+    }
     func SelectableCategoryFont() -> UIFont {
         return GetFont(size: 13)
     }
@@ -71,6 +77,21 @@ class ToDoListContext {
                 break
             }
         }
+    }
+    func dateToString(_ date: Date) -> String {
+        let calendar = Calendar.current
+        let diff = calendar.dateComponents([.day], from: Date.init(), to: date)
+        let dateFormatter = DateFormatter()
+        var result: String = ""
+        switch diff.day! {
+            case 0:
+                dateFormatter.dateFormat = "hh:mm a"
+                result = "Today, " + dateFormatter.string(from: date)
+            default:
+                dateFormatter.dateFormat = "MMMM, dd"
+                result = dateFormatter.string(from: date)
+        }
+        return result
     }
     /*
     func GetTask(id: UUID) -> Task {
@@ -171,6 +192,7 @@ class ToDoListContext {
         guard let task4 = Task.init(caption: "Coffee with Andy", description:  "", dueDate: cal.date(from: comp)!, categories: [cat6], hashTags: [] ) else {
             fatalError("error -> Coffee with Andy")
         }
+        task4.isLiked = true
         
         comp.year = curDay.year
         comp.month = curDay.month

@@ -12,7 +12,7 @@ class TaskTableViewCell: UITableViewCell, SelectableCategoryDelegate {
     //MARK: constants
     public static let identifier = "TaskTableViewCell"
     //MARK: Properties
-    
+    var task: Task?
     @IBOutlet weak var stateButton: UIButton!
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var dueDateLabel: UILabel!
@@ -40,6 +40,7 @@ class TaskTableViewCell: UITableViewCell, SelectableCategoryDelegate {
     }
     // MARK: - Public functions
     func setCellValue(forTask task: Task) {
+        self.task = task
         //set caption
         let captionText = NSMutableAttributedString(string: task.caption)
         self.captionLabel.attributedText = captionText
