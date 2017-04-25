@@ -88,6 +88,14 @@ class TaskEditViewController: UIViewController {
             tag.removeFromSuperview()
         }
         tags.removeAll()
+        var toRemove: [NSLayoutConstraint] = []
+        for contraint in tagsStack.constraints {
+            if contraint.firstAttribute == .width {
+                //tagsStack.removeConstraint(contraint)
+                toRemove.append(contraint)
+            }
+        }
+        tagsStack.removeConstraints(toRemove)
         ttlLength = 0
         for tag in task.hashTags {
             let simpleTag = SimpleTag.init(tag)
@@ -96,11 +104,6 @@ class TaskEditViewController: UIViewController {
             ttlLength += simpleTag.width + tagsStack.spacing
         }
         ttlLength -= tagsStack.spacing
-        for contraint in tagsStack.constraints {
-            if contraint.firstAttribute == .width {
-                tagsStack.removeConstraint(contraint)
-            }
-        }
         tagsStack.widthAnchor.constraint(equalToConstant: ttlLength).isActive = true
     }
     private func setButtonStateImages(current: UIImage?, next: UIImage?, for button: UIButton) {

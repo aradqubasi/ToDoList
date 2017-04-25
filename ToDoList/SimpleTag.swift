@@ -43,7 +43,8 @@ class SimpleTag: UIView {
     init(_ tagName: String) {
         caption = tagName
         super.init(frame: CGRect.zero)
-
+        attachLabel()
+        makeShape()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,7 +64,7 @@ class SimpleTag: UIView {
         self.addSubview(label)
         self.label = label
         
-        label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: egdeToLabel).isActive = true
+        label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: egdeToLabel).isActive = true
         label.topAnchor.constraint(equalTo: self.topAnchor, constant: topToLabel).isActive = true
     }
     

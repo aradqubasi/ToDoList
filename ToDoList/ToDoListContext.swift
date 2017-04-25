@@ -161,7 +161,7 @@ class ToDoListContext {
         comp.year = curDay.year
         comp.month = 2
         comp.day = 20
-        guard let task1 = Task.init(caption: "Create new Galaxy", description:  "", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
+        guard let task1 = Task.init(caption: "Create new Galaxy", description:  "", dueDate: cal.date(from: comp)!, categories: [], hashTags: ["Friends", "Family"] ) else {
             fatalError("error -> Create new Galaxy")
         }
         task1.isDone = true

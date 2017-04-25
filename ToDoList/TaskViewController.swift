@@ -302,7 +302,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         */
     }
     private func CreateTask() -> Task? {
-        let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: [])
+        let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: taskHashTags)
         task?.frequency = taskIsReoccuring!
         return task
     }
