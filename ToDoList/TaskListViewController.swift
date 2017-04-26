@@ -79,6 +79,11 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         })
         return [delete, edit]
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.taskIndexToEdit = indexPath
+        self.performSegue(withIdentifier: ToDoListContext.instance.segueId_tasksToTaskEdit, sender: self)
+        self.taskListTableView.deselectRow(at: indexPath, animated: false)
+    }
     //MARK: UIPopoverPresentationControllerDelegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none

@@ -161,7 +161,7 @@ class ToDoListContext {
         comp.year = curDay.year
         comp.month = 2
         comp.day = 20
-        guard let task1 = Task.init(caption: "Create new Galaxy", description:  "", dueDate: cal.date(from: comp)!, categories: [], hashTags: ["Friends", "Family"] ) else {
+        guard let task1 = Task.init(caption: "Create new Galaxy", description:  "do it in a right way this time", dueDate: cal.date(from: comp)!, categories: [], hashTags: ["Friends", "Family"] ) else {
             fatalError("error -> Create new Galaxy")
         }
         task1.isDone = true
@@ -171,7 +171,7 @@ class ToDoListContext {
         comp.day = curDay.day
         comp.hour = 6
         comp.minute = 0
-        guard let task2 = Task.init(caption: "Morning Run", description:  "", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
+        guard let task2 = Task.init(caption: "Morning Run", description:  "come to the blissful light of the morning sun", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
             fatalError("error -> Morning Run")
         }
         
@@ -180,7 +180,7 @@ class ToDoListContext {
         comp.day = curDay.day
         comp.hour = 7
         comp.minute = 0
-        guard let task3 = Task.init(caption: "Do Yoga", description:  "", dueDate: cal.date(from: comp)!, categories: [cat3, cat4], hashTags: [] ) else {
+        guard let task3 = Task.init(caption: "Do Yoga", description:  "and prepare for paradise", dueDate: cal.date(from: comp)!, categories: [cat3, cat4], hashTags: [] ) else {
             fatalError("error -> Do Yoga")
         }
         
@@ -189,7 +189,7 @@ class ToDoListContext {
         comp.day = curDay.day
         comp.hour = 8
         comp.minute = 0
-        guard let task4 = Task.init(caption: "Coffee with Andy", description:  "", dueDate: cal.date(from: comp)!, categories: [cat6], hashTags: [] ) else {
+        guard let task4 = Task.init(caption: "Coffee with Andy", description:  "this have consequences", dueDate: cal.date(from: comp)!, categories: [cat6], hashTags: [] ) else {
             fatalError("error -> Coffee with Andy")
         }
         task4.isLiked = true
@@ -199,7 +199,7 @@ class ToDoListContext {
         comp.day = curDay.day
         comp.hour = 9
         comp.minute = 0
-        guard let task5 = Task.init(caption: "Video Conference", description:  "", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
+        guard let task5 = Task.init(caption: "Video Conference", description:  "boring...", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
             fatalError("error -> Video Conference")
         }
         
@@ -215,7 +215,7 @@ class ToDoListContext {
         comp.year = curDay.year
         comp.month = 2
         comp.day = 20
-        guard let task7 = Task.init(caption: "Dantist appointment", description:  "", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
+        guard let task7 = Task.init(caption: "Dantist appointment", description:  "scary!", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
             fatalError("error -> Dantist appointment")
         }
         task7.isCancelled = true

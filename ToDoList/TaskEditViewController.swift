@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskEditViewController: UIViewController {
+class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
     // MARK: - Properties
     var task: Task?
     
@@ -36,7 +36,13 @@ class TaskEditViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    // MARK: - SelectableCategory Delegate
+    func onCategoryClick(sender: SelectableCategory) {
+        
+    }
+    func onStateChange(from: Bool) -> Bool {
+        return from
+    }
     /*
     // MARK: - Navigation
 
@@ -53,6 +59,7 @@ class TaskEditViewController: UIViewController {
         }
         let bundle = Bundle.init(for: type(of: self))
         var ttlLength: CGFloat = 0
+        var toRemove: [NSLayoutConstraint] = []
         
         //check button
         let checkImg = UIImage.init(named: "notCheck", in: bundle, compatibleWith: self.traitCollection)
@@ -82,13 +89,32 @@ class TaskEditViewController: UIViewController {
         dateLabel.text = ToDoListContext.instance.dateToString(task.dueDate)
         
         //categories
+        for category in categories {
+            category.removeFromSuperview()
+        }
+        categories.removeAll()
+        ttlLength = 0
+        for category in task.categories {
+            let categoryView = SelectableCategory.init(of: category, state: true)
+            categoryView.delegate = self
+            categoriesStack.addArrangedSubview(categoryView)
+            categories.append(categoryView)
+            ttlLength += categoryView.width + categoriesStack.spacing
+        }
+        ttlLength -= categoriesStack.spacing
+        for constraint in categoriesStack.constraints {
+            if constraint.firstAttribute == .width {
+                categoriesStack.removeConstraint(constraint)
+            }
+        }
+        categoriesStack.widthAnchor.constraint(equalToConstant: ttlLength).isActive = true
         
         //tags
         for tag in tags {
             tag.removeFromSuperview()
         }
         tags.removeAll()
-        var toRemove: [NSLayoutConstraint] = []
+        toRemove = []
         for contraint in tagsStack.constraints {
             if contraint.firstAttribute == .width {
                 //tagsStack.removeConstraint(contraint)
