@@ -63,6 +63,9 @@ class ToDoListContext {
     var segueId_tasksToTaskEdit: String {
         return "tasksToTaskEdit"
     }
+    var segueId_taskEditTotaskView: String {
+        return "taskEditTotaskView"
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
         _tasks.append(newTask)

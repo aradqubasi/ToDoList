@@ -17,6 +17,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     var taskHashTags: [String] = []
     var taskDueDate: Date?
     var taskIsReoccuring: Task.Frequency?
+    var taskToEdit: Task?
     var task: Task? {
         get {
             return CreateTask()
@@ -103,7 +104,18 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
      if let source = sender.source as? DueDateViewController, let dueDate = source.dueDate, let isReoccuring = source.frequency {
             taskDueDate = dueDate
             taskIsReoccuring = isReoccuring
+     } else if let source = sender.source as? TaskEditViewController, let taskToEdit = source.task {
+        quickTaskName = taskToEdit.caption
+        taskDescription = taskToEdit.description
+        taskCategories = taskToEdit.categories
+        taskHashTags = taskToEdit.hashTags
+        taskDueDate = taskToEdit.dueDate
+        taskIsReoccuring = taskToEdit.frequency
+        
+        
+        
         }
+        
         syncViewWithModel()
      }
     /*
@@ -302,9 +314,19 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         */
     }
     private func CreateTask() -> Task? {
+        if let editedTask = taskToEdit {
+            editedTask.caption = quickTaskName!
+            editedTask.description = taskDescription!
+            editedTask.dueDate = taskDueDate!
+            editedTask.categories = taskCategories
+            editedTask.hashTags = taskHashTags
+            editedTask.frequency = taskIsReoccuring!
+            return editedTask
+        } else {
         let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: taskHashTags)
         task?.frequency = taskIsReoccuring!
         return task
+        }
     }
     func catButtonClick(button: UIButton) {
         guard  let pickButton = button as? CategoryPick else {
