@@ -97,7 +97,7 @@ class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
         nameLabel.text = task.caption
         
         //desc
-        descLabel.text = task.description
+        descLabel.text = task.tDescription
         
         //date
         dateLabel.text = ToDoListContext.instance.dateToString(task.dueDate)

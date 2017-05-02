@@ -48,7 +48,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         if let toEdit = task {
             taskToEdit = toEdit
             quickTaskName = toEdit.caption
-            taskDescription = toEdit.description
+            taskDescription = toEdit.tDescription
             taskCategories = toEdit.categories
             taskHashTags = toEdit.hashTags
             taskDueDate = toEdit.dueDate
@@ -103,7 +103,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         if sender.isChecked {
             taskCategories.append(sender.model)
         } else {
-            taskCategories.remove(at: taskCategories.index(where: { return $0 === sender.model })!)
+            taskCategories.remove(at: taskCategories.index(where: { return $0.id == sender.model.id })!)
         }
         syncViewWithModel()
     }
@@ -202,7 +202,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         createButton.setTitle(buttonText, for: .selected)
         //
         for categoryControl in categoryControls {
-            let state = taskCategories.index(where: { return $0 === categoryControl.model }) != nil
+            let state = taskCategories.index(where: { return $0.id == categoryControl.model.id }) != nil
             categoryControl.setState(to: state)
         }
         /*
@@ -351,7 +351,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     private func CreateTask() -> Task? {
         if let editedTask = taskToEdit {
             editedTask.caption = quickTaskName!
-            editedTask.description = taskDescription!
+            editedTask.tDescription = taskDescription!
             editedTask.dueDate = taskDueDate!
             editedTask.categories = taskCategories
             editedTask.hashTags = taskHashTags
@@ -371,7 +371,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         if pickButton.checked {
             taskCategories.append(pickButton.category!)
         } else {
-            let pos = taskCategories.index(where: { $0 === pickButton.category! })
+            let pos = taskCategories.index(where: { $0.id == pickButton.category!.id })
             taskCategories.remove(at: pos!)
         }
     }

@@ -140,7 +140,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     }
     @IBAction func unwindToTasks(sender: UIStoryboardSegue) {
         if let source = sender.source as? TaskViewController {
-            if ToDoListContext.instance.GetTasks().index(where: { return $0 === source.task! }) == nil {
+            if ToDoListContext.instance.GetTasks().index(where: { return $0.id == source.task!.id }) == nil {
                 ToDoListContext.instance.AddTask(source.task!)
             } else {
                 ToDoListContext.instance.UpdateTask(source.task!)

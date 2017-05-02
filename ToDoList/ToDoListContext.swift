@@ -90,7 +90,7 @@ class ToDoListContext {
     func RemoveTask(_ taskToRemove: Task) {
         var _tasks = ToDoListContext.instance.GetTasks()
         for i in 0..<_tasks.count {
-            if _tasks[i] === taskToRemove {
+            if _tasks[i].id == taskToRemove.id {
                 _tasks.remove(at: i)
                 break
             }
