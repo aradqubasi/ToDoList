@@ -21,7 +21,7 @@ class TagConstructor: UIView, UITextFieldDelegate {
     
     let editToEdge: CGFloat = 17
     
-    let cornerRadius: CGFloat = 12
+    let cornerRadius: CGFloat = 16
     
     var width: CGFloat {
         get { return edgeToEdit + editWidth + editToEdge }

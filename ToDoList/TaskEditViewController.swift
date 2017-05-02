@@ -49,10 +49,23 @@ class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ToDoListContext.instance.segueId_taskEditTotaskView, let taskView = segue.destination as? TaskViewController {
-            taskView.taskToEdit = task
+            //taskView.taskToEdit = task
+            taskView.setToEdit(task: task)
         }
     }
- 
+    // MARK: - Actions
+    @IBAction func checkButtonClick(_ sender: UIButton) {
+        guard let refTask = task, let curState = task?.isDone else {
+            fatalError("undefined task")
+        }
+        refTask.isDone = !curState
+        syncView()
+    }
+    
+    @IBAction func backButtonClick(_ sender: Any) {
+        //dismiss(animated: true, completion: nil)
+        
+    }
     // MARK: - Private Methods
     private func syncView() {
         guard let task = self.task else {

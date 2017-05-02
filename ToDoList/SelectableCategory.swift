@@ -48,7 +48,7 @@ class SelectableCategory: UIControl {
             return 32
         }
     }
-    let cornerRadius: CGFloat = 12
+    let cornerRadius: CGFloat = 16
     
     let font = ToDoListContext.instance.SelectableCategoryFont()
     

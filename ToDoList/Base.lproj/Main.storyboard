@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0UM-4y-6Wj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0UM-4y-6Wj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -256,7 +256,7 @@
                                     <constraint firstAttribute="height" constant="33" id="Cth-Zs-S7w"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.27058823529999998" green="0.29411764709999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZGf-Vg-F1f" userLabel="NameToDescSeparator">
@@ -292,7 +292,7 @@
                                     <constraint firstAttribute="height" constant="33" id="fuL-IT-OYq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.27058823529999998" green="0.29411764709999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51C-bQ-fi2" userLabel="DateToCatsSeparator">
@@ -350,7 +350,7 @@
                                     <constraint firstAttribute="height" constant="16" id="Bfo-Bx-Dwu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.27058823529999998" green="0.29411764709999999" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1l-M2-ixC" userLabel="BellToTabSeparator">
@@ -454,6 +454,20 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ajT-tu-DYk">
+                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="vJb-bR-xTi">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9B5-oX-ktb">
+                                <rect key="frame" x="16" y="7" width="108" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="ToDo List" image="backArrow">
+                                    <color key="titleColor" red="0.27058823529411763" green="0.29411764705882354" blue="0.30196078431372547" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonClick:" destination="aJs-go-3A5" eventType="touchUpInside" id="8Gc-PF-MWM"/>
+                                    <segue destination="GfR-H0-mwW" kind="unwind" unwindAction="unwindToTasksWithSender:" id="WKe-3w-OGC"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="gxf-fC-aou">
                             <view key="customView" contentMode="scaleToFill" id="bCA-wM-LRK">
                                 <rect key="frame" x="205" y="-9" width="154" height="62"/>
@@ -465,6 +479,9 @@
                                             <constraint firstAttribute="width" constant="32" id="1SD-Lx-J8c"/>
                                             <constraint firstAttribute="height" constant="32" id="G5W-S4-C6d"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="checkButtonClick:" destination="aJs-go-3A5" eventType="touchUpInside" id="d81-ab-Ofl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9W-Li-AJs">
                                         <rect key="frame" x="40" y="12" width="32" height="32"/>
@@ -519,6 +536,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CRO-fX-4KF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="GfR-H0-mwW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5176.8000000000002" y="1853.5232383808097"/>
         </scene>
@@ -633,7 +651,7 @@
                                 </constraints>
                                 <state key="normal" image="pickDateButton"/>
                                 <connections>
-                                    <segue destination="YsB-S7-0xz" kind="show" id="BUG-SP-2d9"/>
+                                    <segue destination="YsB-S7-0xz" kind="show" identifier="taskViewToDueDate" id="BUG-SP-2d9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kBX-cB-0n6" userLabel="DueDateLabel">
@@ -677,13 +695,13 @@
                                 <state key="normal" image="addAttachmentButton"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIV-0a-aNO" userLabel="CreateButton">
-                                <rect key="frame" x="292" y="508" width="54" height="25"/>
+                                <rect key="frame" x="282" y="508" width="64" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="RWQ-oa-a0h"/>
-                                    <constraint firstAttribute="width" constant="54" id="zPp-fJ-G0N"/>
+                                    <constraint firstAttribute="width" constant="64" id="zPp-fJ-G0N"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
-                                <state key="normal" title="Create"/>
+                                <state key="normal" title="Update"/>
                                 <connections>
                                     <action selector="CreateButtonClick:" destination="szs-3n-vO3" eventType="touchUpInside" id="ff8-sV-taP"/>
                                     <segue destination="5sa-7n-fR8" kind="unwind" unwindAction="unwindToTasksWithSender:" id="liL-wf-Kdk"/>
@@ -1173,7 +1191,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MoH-l2-Sw9" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="tasksActiveButton" id="8tr-gP-jub"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="aw6-8A-b9b">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="aw6-8A-b9b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1285,6 +1303,7 @@
         <image name="addSubaskButton" width="31" height="29"/>
         <image name="addTabBarButton" width="37" height="35"/>
         <image name="addTagButton" width="27" height="26"/>
+        <image name="backArrow" width="20" height="33"/>
         <image name="bell" width="21" height="26"/>
         <image name="calendarInactiveTabBarButton" width="29" height="29"/>
         <image name="categories" width="31" height="35"/>

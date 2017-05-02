@@ -11,6 +11,7 @@ import UIKit
 class DueDateViewController: UIViewController {
     //MARK: - Properties
     var isValid: Bool = false
+    private var _dueDate: Date?
     var dueDate: Date? {
         get {
             let pickedDate = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
@@ -23,8 +24,11 @@ class DueDateViewController: UIViewController {
             dueDateComponents.minute = pickedTime.minute
             return Calendar.current.date(from: dueDateComponents)
         }
+        set(newDueDate) {
+            _dueDate = newDueDate
+        }
     }
-    
+    private var _frequency: Task.Frequency?
     var frequency: Task.Frequency? {
         get {
             var temp: Task.Frequency?
@@ -40,6 +44,9 @@ class DueDateViewController: UIViewController {
             }
             return temp
         }
+        set (newFrequency) {
+            _frequency = newFrequency
+        }
     }
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -49,6 +56,18 @@ class DueDateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        datePicker.date = _dueDate!
+        timePicker.date = _dueDate!
+        
+        var selectedIndex: Int = 2
+        if let initialFrequency = _frequency {
+            switch initialFrequency {
+                case Task.Frequency.weekly: selectedIndex = 0
+                case Task.Frequency.daily: selectedIndex = 1
+                case Task.Frequency.once: selectedIndex = 2
+            }
+        }
+        frequencySegmentedControl.selectedSegmentIndex = selectedIndex
         // Do any additional setup after loading the view.
     }
 

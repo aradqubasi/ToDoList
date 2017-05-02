@@ -43,8 +43,18 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     @IBOutlet weak var fileButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    
-    
+    // MARK: - Initialization
+    func setToEdit(task: Task?) {
+        if let toEdit = task {
+            taskToEdit = toEdit
+            quickTaskName = toEdit.caption
+            taskDescription = toEdit.description
+            taskCategories = toEdit.categories
+            taskHashTags = toEdit.hashTags
+            taskDueDate = toEdit.dueDate
+            taskIsReoccuring = toEdit.frequency
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         //taskHashTags = ["New", "Oppotunity", "Growth"]
@@ -55,7 +65,6 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         descriptionEdit.delegate = self
         // Do any additional setup after loading the view.
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -104,7 +113,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
      if let source = sender.source as? DueDateViewController, let dueDate = source.dueDate, let isReoccuring = source.frequency {
             taskDueDate = dueDate
             taskIsReoccuring = isReoccuring
-     } else if let source = sender.source as? TaskEditViewController, let taskToEdit = source.task {
+     } /*else if let source = sender.source as? TaskEditViewController, let taskToEdit = source.task {
         quickTaskName = taskToEdit.caption
         taskDescription = taskToEdit.description
         taskCategories = taskToEdit.categories
@@ -115,9 +124,23 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         
         
         }
-        
+        */
         syncViewWithModel()
      }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ToDoListContext.instance.segueId_taskViewToDueDate, let navController = segue.destination as? UINavigationController, let dueDateView = navController.topViewController as? DueDateViewController {
+            if let dueDate = taskDueDate {
+                dueDateView.dueDate = dueDate as Date?
+            } else {
+                dueDateView.dueDate = Date.init()
+            }
+            if taskIsReoccuring != nil {
+                dueDateView.frequency = taskIsReoccuring
+            } else {
+                dueDateView.frequency = Task.Frequency.once
+            }
+        }
+    }
     /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -166,6 +189,17 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             isValid = true
         }
         createButton.isEnabled = isValid
+        var buttonText = ""
+        if taskToEdit != nil {
+            buttonText = "Update"
+        } else {
+            buttonText = "Create"
+        }
+        createButton.setTitle(buttonText, for: .disabled)
+        createButton.setTitle(buttonText, for: .focused)
+        createButton.setTitle(buttonText, for: .highlighted)
+        createButton.setTitle(buttonText, for: .normal)
+        createButton.setTitle(buttonText, for: .selected)
         //
         for categoryControl in categoryControls {
             let state = taskCategories.index(where: { return $0 === categoryControl.model }) != nil
@@ -243,6 +277,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         for category in categories {
             let categoryControl = SelectableCategory.init(of: category, state: false)
             categoriesStackView.addArrangedSubview(categoryControl)
+            categoryControls.append(categoryControl)
             ttlWidth += categoryControl.width
             ttlWidth += categoriesStackView.spacing
             categoryControl.delegate = self

@@ -10,8 +10,12 @@ import UIKit
 class ToDoListContext {
     static let instance = ToDoListContext()
     //MARK: Private Methods
-    private var _tasks = [Task]()
-    private var _categories = [Category]()
+    //private var _tasks = [Task]()
+    //private var _categories: [Category]?
+    //MARK: - Archiving
+    static let ArchiveDirecroty = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchCategoryPath = ArchiveDirecroty.appendingPathComponent("categories")
+    static let ArchTasksPath = ArchiveDirecroty.appendingPathComponent("tasks")
     //MARK: - Helpers
     func GetFont(size: CGFloat) -> UIFont {
         guard let font = UIFont.init(name: "Avenir-Light", size: size) else {
@@ -66,14 +70,25 @@ class ToDoListContext {
     var segueId_taskEditTotaskView: String {
         return "taskEditTotaskView"
     }
+    var segueId_taskViewToDueDate: String {
+        return "taskViewToDueDate"
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
+        var _tasks = ToDoListContext.instance.GetTasks()
         _tasks.append(newTask)
+        NSKeyedArchiver.archiveRootObject(_tasks, toFile: ToDoListContext.ArchTasksPath.path)
     }
-    func UpdateTask(_: Task) {
-        
+    func UpdateTask(_ updatedTask: Task) {
+        var _tasks = ToDoListContext.instance.GetTasks()
+        guard let index = _tasks.index(where: { return $0.id == updatedTask.id }) else {
+            fatalError("task to update is not in list \(updatedTask)")
+        }
+        _tasks[index] = updatedTask
+        NSKeyedArchiver.archiveRootObject(_tasks, toFile: ToDoListContext.ArchTasksPath.path)
     }
     func RemoveTask(_ taskToRemove: Task) {
+        var _tasks = ToDoListContext.instance.GetTasks()
         for i in 0..<_tasks.count {
             if _tasks[i] === taskToRemove {
                 _tasks.remove(at: i)
@@ -102,6 +117,13 @@ class ToDoListContext {
     }
     */
     func GetTasks() -> [Task] {
+        var _tasks: [Task] = []
+        if let tasks = NSKeyedUnarchiver.unarchiveObject(withFile: ToDoListContext.ArchTasksPath.path) as? [Task] {
+            _tasks = tasks
+        } else {
+            _tasks = pregenTasks()
+            NSKeyedArchiver.archiveRootObject(_tasks, toFile: ToDoListContext.ArchTasksPath.path)
+        }
         return _tasks
     }
     func AddCategory(_: Task) {
@@ -119,10 +141,17 @@ class ToDoListContext {
     }
     */
     func GetCategories() -> [Category] {
+        var _categories: [Category] = []
+        if let categories = NSKeyedUnarchiver.unarchiveObject(withFile: ToDoListContext.ArchCategoryPath.path) as? [Category] {
+            _categories = categories
+        } else {
+            _categories = pregenCategories()
+            //NSKeyedArchiver.archiveRootObject(_categories, toFile: ToDoListContext.ArchCategoryPath.path)
+        }
         return _categories
     }
-    //MARK: Constructor
-    init() {
+    //MARK: Pregeneration
+    private func pregenCategories() -> [Category] {
         let bundle = Bundle.init(for: type(of: self))
         let workCat = UIImage.init(named: "workCat", in: bundle, compatibleWith: nil)
         let learnCat = UIImage.init(named: "learnCat", in: bundle, compatibleWith: nil)
@@ -150,12 +179,10 @@ class ToDoListContext {
             fatalError("no food")
         }
         
-        _categories.append(cat1)
-        _categories.append(cat2)
-        _categories.append(cat3)
-        _categories.append(cat4)
-        _categories.append(cat5)
-        _categories.append(cat6)
+        return [cat1, cat2, cat3, cat4, cat5, cat6]
+    }
+    private func pregenTasks() -> [Task] {
+        let bundle = Bundle.init(for: type(of: self))
         
         let cal = Calendar.current
         var comp = DateComponents()
@@ -183,18 +210,20 @@ class ToDoListContext {
         comp.day = curDay.day
         comp.hour = 7
         comp.minute = 0
-        guard let task3 = Task.init(caption: "Do Yoga", description:  "and prepare for paradise", dueDate: cal.date(from: comp)!, categories: [cat3, cat4], hashTags: [] ) else {
+        guard let task3 = Task.init(caption: "Do Yoga", description:  "and prepare for paradise", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
             fatalError("error -> Do Yoga")
         }
+        //categories: [cat3, cat4]
         
         comp.year = curDay.year
         comp.month = curDay.month
         comp.day = curDay.day
         comp.hour = 8
         comp.minute = 0
-        guard let task4 = Task.init(caption: "Coffee with Andy", description:  "this have consequences", dueDate: cal.date(from: comp)!, categories: [cat6], hashTags: [] ) else {
+        guard let task4 = Task.init(caption: "Coffee with Andy", description:  "this have consequences", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
             fatalError("error -> Coffee with Andy")
         }
+        //categories: [cat6]
         task4.isLiked = true
         
         comp.year = curDay.year
@@ -223,6 +252,10 @@ class ToDoListContext {
         }
         task7.isCancelled = true
         
-        _tasks = [task1, task2, task3, task4, task5, task6, task7]
+        return [task1, task2, task3, task4, task5, task6, task7]
+    }
+    //MARK: Constructor
+    init() {
+
     }
 }

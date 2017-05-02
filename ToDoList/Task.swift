@@ -7,7 +7,19 @@
 //
 
 import UIKit
-class Task {
+class Task: NSObject, NSCoding {
+    struct Keys {
+        static let id = "id"
+        static let caption = "caption"
+        static let description = "description"
+        static let isDone = "isDone"
+        static let isCancelled = "isCancelled"
+        static let dueDate = "dueDate"
+        static let categories = "categories"
+        static let hashTags = "hashTags"
+        static let frequency = "frequency"
+        static let isLiked = "isLiked"
+    }
     var id: UUID
     var caption: String
     var description: String
@@ -38,4 +50,23 @@ class Task {
         case weekly
         case once
     }
+    // MARK: - NSObject
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let id = aDecoder.decodeObject(forKey: Task.Keys.id) as? UUID else {
+            fatalError("Task's id is not decoded")
+        }
+        guard let caption = aDecoder.decodeObject(forKey: Task.Keys.caption) as? String else {
+            fatalError("Task's caption is not decoded")
+        }
+        guard let description = aDecoder.decodeObject(forKey: Task.Keys.description) as? String else {
+            fatalError("Task's description is not decoded")
+        }
+        let isDone = aDecoder.decodeBool(forKey: Task.Keys.isDone)
+        let isCancelled = aDecoder.decodeBool(forKey: Task.Keys.isCancelled)
+        guard let hashTags = aDecoder.decodeObject(forKey: Task.Keys.hashTags) else {
+            <#statements#>
+        }
+    }
+    
+    
 }

@@ -18,7 +18,7 @@ class SimpleTag: UIView {
     let labelHeigt: CGFloat = 16
     let labelToBottom: CGFloat = 8
     
-    let borderRadius: CGFloat = 12
+    let borderRadius: CGFloat = 16
     let borderWidth: CGFloat = 0.5
     
     var width: CGFloat {

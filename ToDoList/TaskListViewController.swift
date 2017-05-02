@@ -146,6 +146,9 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
                 ToDoListContext.instance.UpdateTask(source.task!)
             }
             taskListTableView.reloadData()
+        } else if let source = sender.source as? TaskEditViewController {
+            ToDoListContext.instance.UpdateTask(source.task!)
+            taskListTableView.reloadData()
         }
     }
     //MARK: Private methods

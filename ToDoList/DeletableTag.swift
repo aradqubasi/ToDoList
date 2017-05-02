@@ -93,7 +93,7 @@ class DeletableTag: UIView {
         shapeLayer.lineWidth = 1
         shapeLayer.lineJoin = kCALineJoinRound
         shapeLayer.lineDashPattern = [1,1]
-        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 12).cgPath
+        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 16).cgPath
         
         self.layer.addSublayer(shapeLayer)
     }
