@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1574BB4F1EBC8A4600C5E31A /* TasksFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB4E1EBC8A4600C5E31A /* TasksFilter.swift */; };
+		1574BB511EBC8AFF00C5E31A /* TasksFilterAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB501EBC8AFF00C5E31A /* TasksFilterAll.swift */; };
+		1574BB531EBCB55B00C5E31A /* TasksFilterToday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB521EBCB55B00C5E31A /* TasksFilterToday.swift */; };
+		1574BB551EBCBF6800C5E31A /* TasksFilterUpcomming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB541EBCBF6800C5E31A /* TasksFilterUpcomming.swift */; };
 		8429A6F41E827AA100097602 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F31E827AA100097602 /* AppDelegate.swift */; };
 		8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F51E827AA100097602 /* TaskListViewController.swift */; };
 		8429A6F91E827AA100097602 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8429A6F71E827AA100097602 /* Main.storyboard */; };
@@ -47,6 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1574BB4E1EBC8A4600C5E31A /* TasksFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFilter.swift; sourceTree = "<group>"; };
+		1574BB501EBC8AFF00C5E31A /* TasksFilterAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFilterAll.swift; sourceTree = "<group>"; };
+		1574BB521EBCB55B00C5E31A /* TasksFilterToday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFilterToday.swift; sourceTree = "<group>"; };
+		1574BB541EBCBF6800C5E31A /* TasksFilterUpcomming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFilterUpcomming.swift; sourceTree = "<group>"; };
 		8429A6F01E827AA100097602 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8429A6F31E827AA100097602 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8429A6F51E827AA100097602 /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +154,10 @@
 				84EC621E1EA7F66C00C27CC8 /* SelectableCategoryDelegate.swift */,
 				84824B3C1EAC7F5A00B227DA /* TaskEditViewController.swift */,
 				84824B3E1EAC97C400B227DA /* SimpleTag.swift */,
+				1574BB4E1EBC8A4600C5E31A /* TasksFilter.swift */,
+				1574BB501EBC8AFF00C5E31A /* TasksFilterAll.swift */,
+				1574BB521EBCB55B00C5E31A /* TasksFilterToday.swift */,
+				1574BB541EBCBF6800C5E31A /* TasksFilterUpcomming.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -266,13 +278,16 @@
 			files = (
 				84824B3F1EAC97C400B227DA /* SimpleTag.swift in Sources */,
 				84F6ED811E9AD2B800FDBAF5 /* CategoryPick.swift in Sources */,
+				1574BB551EBCBF6800C5E31A /* TasksFilterUpcomming.swift in Sources */,
 				84EC62171EA363BF00C27CC8 /* DeletableTagDelegate.swift in Sources */,
 				8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */,
+				1574BB4F1EBC8A4600C5E31A /* TasksFilter.swift in Sources */,
 				84F6ED7F1E94146300FDBAF5 /* Helper.swift in Sources */,
 				84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */,
 				84EC62191EA48CD400C27CC8 /* TagConstructor.swift in Sources */,
 				84ED1A4B1E8A98C2008FD53D /* CategoryViewCell.swift in Sources */,
 				846A5BCC1E8D593B0087A00C /* ToDoListContext.swift in Sources */,
+				1574BB531EBCB55B00C5E31A /* TasksFilterToday.swift in Sources */,
 				84FF311B1E82C48E00B43773 /* TaskTableViewCell.swift in Sources */,
 				84F6ED7B1E8ED1CC00FDBAF5 /* TaskViewController.swift in Sources */,
 				84EC621F1EA7F66C00C27CC8 /* SelectableCategoryDelegate.swift in Sources */,
@@ -281,6 +296,7 @@
 				84F6ED791E8E976B00FDBAF5 /* TasksFiltersViewController.swift in Sources */,
 				84EC621D1EA6851000C27CC8 /* SelectableCategory.swift in Sources */,
 				84EC621B1EA4A5E800C27CC8 /* TagConstructorDelegate.swift in Sources */,
+				1574BB511EBC8AFF00C5E31A /* TasksFilterAll.swift in Sources */,
 				84EC62151EA288BD00C27CC8 /* DeletableTag.swift in Sources */,
 				84ED1A491E8A90C5008FD53D /* CategoriesViewController.swift in Sources */,
 				84ED1A4D1E8BDFB6008FD53D /* CategoryViewController.swift in Sources */,

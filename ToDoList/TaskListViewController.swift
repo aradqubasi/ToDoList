@@ -12,10 +12,12 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     //MARK: Properties
     var tasks: [Task] {
         get {
-            return ToDoListContext.instance.GetTasks()
+            return filter.filteredTasks
+            //return ToDoListContext.instance.GetTasks()
         }
     }
     var taskIndexToEdit: IndexPath?
+    var filter: TasksFilter = TaskFilterAll()
     @IBOutlet weak var taskListTableView: TaskListTableView!
     @IBOutlet weak var filtersDropdownButton: UIButton!
     @IBOutlet weak var taskNameEdit: UITextField!
@@ -32,6 +34,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         taskNameEdit.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         taskNameEdit.layer.borderColor = ToDoListContext.instance.tdPaleGrey.cgColor
+        syncView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,10 +148,10 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
             } else {
                 ToDoListContext.instance.UpdateTask(source.task!)
             }
-            taskListTableView.reloadData()
+            syncView()
         } else if let source = sender.source as? TaskEditViewController {
             ToDoListContext.instance.UpdateTask(source.task!)
-            taskListTableView.reloadData()
+            syncView()
         }
     }
     //MARK: Private methods
@@ -163,6 +166,12 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
             fatalError("everything is undestructible")
         }
         return [task1, task2, task3]
+    }
+    private func syncView() {
+        taskListTableView.reloadData()
+        if let firstRow = filter.firstTask {
+            taskListTableView.scrollToRow(at: IndexPath.init(row: firstRow, section: 0), at: .top, animated: false)
+        }
     }
     }
 

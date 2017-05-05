@@ -1154,12 +1154,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="underConstruction" translatesAutoresizingMaskIntoConstraints="NO" id="W1f-Z6-Yjs">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPP-a0-HZ2">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WPP-a0-HZ2" firstAttribute="width" secondItem="o2b-ZH-wzu" secondAttribute="width" id="Bq2-xy-vLM"/>
+                            <constraint firstItem="WPP-a0-HZ2" firstAttribute="height" secondItem="o2b-ZH-wzu" secondAttribute="height" id="LtR-gi-VR1"/>
+                            <constraint firstItem="WPP-a0-HZ2" firstAttribute="leading" secondItem="o2b-ZH-wzu" secondAttribute="leading" id="O6w-Da-eYn"/>
+                            <constraint firstItem="WPP-a0-HZ2" firstAttribute="top" secondItem="o2b-ZH-wzu" secondAttribute="top" id="U9X-bk-iUt"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbq-6C-1QQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1316,7 +1321,6 @@
         <image name="takeCameraShotButton" width="27" height="24"/>
         <image name="tasksActiveButton" width="32" height="31"/>
         <image name="trashcan" width="49" height="50"/>
-        <image name="underConstruction" width="75" height="75"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="QAm-RT-Ayf"/>

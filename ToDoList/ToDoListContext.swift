@@ -17,6 +17,13 @@ class ToDoListContext {
     static let ArchCategoryPath = ArchiveDirecroty.appendingPathComponent("categories")
     static let ArchTasksPath = ArchiveDirecroty.appendingPathComponent("tasks")
     //MARK: - Helpers
+    static func IsToday(_ day: Date) -> Bool {
+        if let dateDifference = Calendar.current.dateComponents([.day], from: Date.init(), to: day).day, dateDifference == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
     func GetFont(size: CGFloat) -> UIFont {
         guard let font = UIFont.init(name: "Avenir-Light", size: size) else {
             fatalError("font Avenir-Light \(size) was not found")
