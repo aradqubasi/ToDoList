@@ -10,4 +10,5 @@ import Foundation
 protocol TasksFilter {
     var filteredTasks: [Task] { get }
     var firstTask: Int? { get }
+    var name: String { get }
 }
