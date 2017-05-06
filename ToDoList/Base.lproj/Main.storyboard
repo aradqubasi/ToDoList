@@ -1153,8 +1153,22 @@
                     <view key="view" contentMode="scaleToFill" id="o2b-ZH-wzu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jLB-Q6-PnS" userLabel="FiltersStack" customClass="FiltersStack" customModule="ToDoList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oaH-au-Gt1" firstAttribute="top" secondItem="jLB-Q6-PnS" secondAttribute="bottom" id="3sJ-QK-J3Q"/>
+                            <constraint firstAttribute="trailing" secondItem="jLB-Q6-PnS" secondAttribute="trailing" id="Lgj-cI-lED"/>
+                            <constraint firstItem="jLB-Q6-PnS" firstAttribute="top" secondItem="WgO-St-Edl" secondAttribute="bottom" id="RvO-Zs-2qk"/>
+                            <constraint firstItem="jLB-Q6-PnS" firstAttribute="leading" secondItem="o2b-ZH-wzu" secondAttribute="leading" id="aFS-MB-f7X"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="filtersStack" destination="jLB-Q6-PnS" id="aMt-Vb-KhN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbq-6C-1QQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

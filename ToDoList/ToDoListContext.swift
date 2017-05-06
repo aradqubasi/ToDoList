@@ -157,6 +157,30 @@ class ToDoListContext {
         }
         return _categories
     }
+    private var _currentFilter: TasksFilter?
+    private var _filters: [TasksFilter]?
+    var currentFilter: TasksFilter {
+        get {
+            if let filter = _currentFilter {
+                return filter
+            } else {
+                let filter = TasksFilterAll()
+                _currentFilter = filter
+                return filter
+            }
+        }
+        set(new) {
+            _currentFilter = new
+        }
+    }
+    var filters: {
+        get {
+            
+        }
+        set {
+            
+        }
+    }
     //MARK: Pregeneration
     private func pregenCategories() -> [Category] {
         let bundle = Bundle.init(for: type(of: self))

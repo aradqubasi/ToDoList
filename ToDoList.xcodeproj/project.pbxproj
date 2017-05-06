@@ -12,6 +12,7 @@
 		1574BB531EBCB55B00C5E31A /* TasksFilterToday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB521EBCB55B00C5E31A /* TasksFilterToday.swift */; };
 		1574BB551EBCBF6800C5E31A /* TasksFilterUpcomming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB541EBCBF6800C5E31A /* TasksFilterUpcomming.swift */; };
 		1574BB571EBD0BAB00C5E31A /* FiltersStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB561EBD0BAB00C5E31A /* FiltersStack.swift */; };
+		1574BB591EBDB17E00C5E31A /* FiltersStackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1574BB581EBDB17E00C5E31A /* FiltersStackDelegate.swift */; };
 		8429A6F41E827AA100097602 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F31E827AA100097602 /* AppDelegate.swift */; };
 		8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8429A6F51E827AA100097602 /* TaskListViewController.swift */; };
 		8429A6F91E827AA100097602 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8429A6F71E827AA100097602 /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 		1574BB521EBCB55B00C5E31A /* TasksFilterToday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFilterToday.swift; sourceTree = "<group>"; };
 		1574BB541EBCBF6800C5E31A /* TasksFilterUpcomming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFilterUpcomming.swift; sourceTree = "<group>"; };
 		1574BB561EBD0BAB00C5E31A /* FiltersStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersStack.swift; sourceTree = "<group>"; };
+		1574BB581EBDB17E00C5E31A /* FiltersStackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersStackDelegate.swift; sourceTree = "<group>"; };
 		8429A6F01E827AA100097602 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8429A6F31E827AA100097602 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8429A6F51E827AA100097602 /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				1574BB521EBCB55B00C5E31A /* TasksFilterToday.swift */,
 				1574BB541EBCBF6800C5E31A /* TasksFilterUpcomming.swift */,
 				1574BB561EBD0BAB00C5E31A /* FiltersStack.swift */,
+				1574BB581EBDB17E00C5E31A /* FiltersStackDelegate.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				1574BB551EBCBF6800C5E31A /* TasksFilterUpcomming.swift in Sources */,
 				84EC62171EA363BF00C27CC8 /* DeletableTagDelegate.swift in Sources */,
 				8429A6F61E827AA100097602 /* TaskListViewController.swift in Sources */,
+				1574BB591EBDB17E00C5E31A /* FiltersStackDelegate.swift in Sources */,
 				1574BB4F1EBC8A4600C5E31A /* TasksFilter.swift in Sources */,
 				84F6ED7F1E94146300FDBAF5 /* Helper.swift in Sources */,
 				84FF31191E82945500B43773 /* TaskListTableView.swift in Sources */,

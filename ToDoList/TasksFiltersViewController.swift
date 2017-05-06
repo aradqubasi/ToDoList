@@ -8,11 +8,15 @@
 
 import UIKit
 
-class TasksFiltersViewController: UIViewController {
-
+class TasksFiltersViewController: UIViewController, FiltersStackDelegate {
+    // MARK: - Outlets
+    @IBOutlet weak var filtersStack: FiltersStack!
+    
+    // MARK: - Events
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        filtersStack.filters = filters
+        filtersStack.syncView()
         // Do any additional setup after loading the view.
     }
 
@@ -21,6 +25,12 @@ class TasksFiltersViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - FiltersStackDelegate Methods
+    var filters: [TasksFilter] {
+        return ToDoListContext.instance.GetFilters()
+    }
+    var currentFilter: TasksFilter { get set }
+    func onFilterSelect(_: TasksFilter) -> Bool
 
     /*
     // MARK: - Navigation

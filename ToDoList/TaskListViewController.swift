@@ -17,7 +17,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         }
     }
     var taskIndexToEdit: IndexPath?
-    var filter: TasksFilter = TaskFilterAll()
+    var filter: TasksFilter = ToDoListContext.instance.GetDefaultFilter()
     @IBOutlet weak var taskListTableView: TaskListTableView!
     @IBOutlet weak var filtersDropdownButton: UIButton!
     @IBOutlet weak var taskNameEdit: UITextField!
@@ -112,6 +112,8 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showTasksFilters" {
             let vc = segue.destination as? TasksFiltersViewController
+            vc?.filters = ToDoListContext.instance.GetFilters()
+            vc?.currentFilter = filter
             let pop = vc?.popoverPresentationController
             vc?.preferredContentSize = CGSize(width: 300, height: 300)
             //pop?.popoverLayoutMargins.top = 200

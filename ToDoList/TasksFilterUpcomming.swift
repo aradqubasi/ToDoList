@@ -26,4 +26,7 @@ class TasksFilterUpcomming : TasksFilter {
             return result
         }
     }
+    var name: String {
+        return "Upcomming Tasks"
+    }
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class TaskFilterAll: TasksFilter {
+class TasksFilterAll: TasksFilter {
     // MARK: - Initialization
     init() {
         
@@ -30,8 +30,7 @@ class TaskFilterAll: TasksFilter {
             return firstTodayTaskIndex
         }
     }
-    func GetFilteredTasks() -> [Task] {
-        let tasks = ToDoListContext.instance.GetTasks().sorted(by: {return $0.dueDate < $1.dueDate})
-        return tasks
+    var name: String {
+        return "All Tasks"
     }
 }

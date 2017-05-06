@@ -26,4 +26,7 @@ class TasksFilterToday: TasksFilter {
             return firstTask
         }
     }
+    var name: String {
+        return "Today Tasks"
+    }
 }
