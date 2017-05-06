@@ -19,10 +19,18 @@ class FiltersStack: UIStackView {
     
     var delegate: FiltersStackDelegate?
     
+    var font: UIFont = ToDoListContext.instance.FontTasksFilterList
+    
+    var textColor: UIColor = ToDoListContext.instance.tdDarkGrey
+    
     // MARK: - Geometry
     
     var buttonHeight: CGFloat {
         return 64
+    }
+    
+    var edgeToButton: CGFloat {
+        return 16
     }
     
     // MARK: - Private Methods
@@ -43,16 +51,36 @@ class FiltersStack: UIStackView {
         for filter in filters {
             
             let filterButton = UIButton.init()
-            
+            /*
             filterButton.setTitle(filter.name, for: .disabled)
             filterButton.setTitle(filter.name, for: .focused)
             filterButton.setTitle(filter.name, for: .highlighted)
             filterButton.setTitle(filter.name, for: .normal)
+            
+            filterButton.setTitleColor(self.textColor, for: .disabled)
+            filterButton.setTitleColor(self.textColor, for: .focused)
+            filterButton.setTitleColor(self.textColor, for: .highlighted)
+            filterButton.setTitleColor(self.textColor, for: .normal)
+            */
+            filterButton.setAttributedTitle(NSAttributedString.init(string: filter.name, attributes: [NSFontAttributeName : self.font, NSForegroundColorAttributeName : self.textColor]), for: .disabled)
+            filterButton.setAttributedTitle(NSAttributedString.init(string: filter.name, attributes: [NSFontAttributeName : self.font, NSForegroundColorAttributeName : self.textColor]), for: .focused)
+            filterButton.setAttributedTitle(NSAttributedString.init(string: filter.name, attributes: [NSFontAttributeName : self.font, NSForegroundColorAttributeName : self.textColor]), for: .highlighted)
+            filterButton.setAttributedTitle(NSAttributedString.init(string: filter.name, attributes: [NSFontAttributeName : self.font, NSForegroundColorAttributeName : self.textColor]), for: .normal)
+            
             filterButton.addTarget(self, action: #selector(onFilterClick(sender:)), for: .touchUpInside)
+            
+            filterButton.contentHorizontalAlignment = .left
+            /*
+            guard let label = filterButton.titleLabel else {
+                fatalError("no label in filter button")
+            }
+            label.textAlignment = NSTextAlignment.left
+            */
             
             filterButton.translatesAutoresizingMaskIntoConstraints = false
             self.addArrangedSubview(filterButton)
-            filterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+            filterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.edgeToButton).isActive = true
+            //filterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
             filterButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
             filterButton.heightAnchor.constraint(equalToConstant: self.buttonHeight).isActive = true
             if let prev = prevFilterButton {

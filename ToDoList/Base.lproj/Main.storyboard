@@ -704,7 +704,7 @@
                                 <state key="normal" title="Update"/>
                                 <connections>
                                     <action selector="CreateButtonClick:" destination="szs-3n-vO3" eventType="touchUpInside" id="ff8-sV-taP"/>
-                                    <segue destination="5sa-7n-fR8" kind="unwind" unwindAction="unwindToTasksWithSender:" id="liL-wf-Kdk"/>
+                                    <segue destination="5sa-7n-fR8" kind="unwind" identifier="" unwindAction="unwindToTasksWithSender:" id="liL-wf-Kdk"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addTagButton" translatesAutoresizingMaskIntoConstraints="NO" id="Zyw-o9-TAI">
@@ -1168,9 +1168,11 @@
                     </view>
                     <connections>
                         <outlet property="filtersStack" destination="jLB-Q6-PnS" id="aMt-Vb-KhN"/>
+                        <segue destination="CcR-qv-vc3" kind="unwind" identifier="taskFiltersToTaskList" unwindAction="unwindToTasksWithSender:" id="gRA-72-ii5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbq-6C-1QQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="CcR-qv-vc3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4495" y="376"/>
         </scene>

@@ -15,7 +15,7 @@ class TasksFiltersViewController: UIViewController, FiltersStackDelegate {
     // MARK: - Events
     override func viewDidLoad() {
         super.viewDidLoad()
-        filtersStack.filters = filters
+        filtersStack.delegate = self
         filtersStack.syncView()
         // Do any additional setup after loading the view.
     }
@@ -27,10 +27,18 @@ class TasksFiltersViewController: UIViewController, FiltersStackDelegate {
     
     // MARK: - FiltersStackDelegate Methods
     var filters: [TasksFilter] {
-        return ToDoListContext.instance.GetFilters()
+        return ToDoListContext.instance.filters
     }
-    var currentFilter: TasksFilter { get set }
-    func onFilterSelect(_: TasksFilter) -> Bool
+    var currentFilter: TasksFilter {
+        get {
+            return ToDoListContext.instance.currentFilter
+        }
+    }
+    func onFilterSelect(_ filter: TasksFilter) -> Bool {
+        ToDoListContext.instance.currentFilter = filter
+        self.performSegue(withIdentifier: ToDoListContext.instance.segueId_taskFiltersToTaskList, sender: self)
+        return true
+    }
 
     /*
     // MARK: - Navigation

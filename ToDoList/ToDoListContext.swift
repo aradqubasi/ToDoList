@@ -39,6 +39,12 @@ class ToDoListContext {
         }
         return font
     }
+    var FontTasksFilterList: UIFont {
+        guard let font = UIFont.init(name: "Avenir-Light", size: 16) else {
+            fatalError("font Avenir-Light 16 was not found")
+        }
+        return font
+    }
     func SelectableCategoryFont() -> UIFont {
         return GetFont(size: 13)
     }
@@ -70,6 +76,9 @@ class ToDoListContext {
     var tdPaleGrey: UIColor {
         return UIColor(red: 230.0 / 255.0, green: 232.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
     }
+    var tdDarkGrey: UIColor {
+        return UIColor(red: 46.0 / 255.0, green: 50.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+    }
     // MARK: - Segue Identifiers
     var segueId_tasksToTaskEdit: String {
         return "tasksToTaskEdit"
@@ -79,6 +88,9 @@ class ToDoListContext {
     }
     var segueId_taskViewToDueDate: String {
         return "taskViewToDueDate"
+    }
+    var segueId_taskFiltersToTaskList: String {
+        return "taskFiltersToTaskList"
     }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
@@ -173,12 +185,18 @@ class ToDoListContext {
             _currentFilter = new
         }
     }
-    var filters: {
+    var filters: [TasksFilter] {
         get {
-            
+            if let filters = _filters {
+                return filters
+            } else {
+                let filters: [TasksFilter] = [TasksFilterAll(), TasksFilterToday(), TasksFilterUpcomming()]
+                _filters = filters
+                return filters
+            }
         }
-        set {
-            
+        set(new) {
+            _filters = new
         }
     }
     //MARK: Pregeneration

@@ -9,6 +9,6 @@
 import Foundation
 protocol FiltersStackDelegate {
     var filters: [TasksFilter] { get }
-    var currentFilter: TasksFilter { get set }
+    var currentFilter: TasksFilter { get }
     func onFilterSelect(_: TasksFilter) -> Bool
 }
