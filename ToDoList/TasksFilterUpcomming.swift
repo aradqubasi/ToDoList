@@ -11,7 +11,12 @@ class TasksFilterUpcomming : TasksFilter {
     var filteredTasks: [Task] {
         get {
             let unsorted = ToDoListContext.instance.GetTasks()
-            let filtered = unsorted.drop(while: { return ($0.dueDate < Date.init()) || ($0.isDone) })
+            let filtered = unsorted.filter( {
+                let isPasttask = $0.dueDate < Date.init()
+                let isDone = $0.isDone
+                let toDrop = !isPasttask && !isDone
+                return toDrop
+            })
             let sorted = filtered.sorted(by: { return $0.dueDate < $1.dueDate })
             return sorted
         }

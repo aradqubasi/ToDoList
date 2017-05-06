@@ -21,6 +21,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     @IBOutlet weak var taskListTableView: TaskListTableView!
     @IBOutlet weak var filtersDropdownButton: UIButton!
     @IBOutlet weak var taskNameEdit: UITextField!
+    @IBOutlet weak var filterLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +116,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
             let pop = vc?.popoverPresentationController
             vc?.preferredContentSize = CGSize(width: 300, height: 300)
             //pop?.popoverLayoutMargins.top = 200
+            pop?.permittedArrowDirections = .up
             pop?.barButtonItem = nil
             pop?.sourceView = filtersDropdownButton
             pop?.sourceRect = filtersDropdownButton.bounds
@@ -152,7 +154,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         } else if let source = sender.source as? TaskEditViewController {
             ToDoListContext.instance.UpdateTask(source.task!)
             syncView()
-        } else if let source = sender.source as? TasksFiltersViewController {
+        } else if sender.source is TasksFiltersViewController {
             syncView()
         }
     }
@@ -170,10 +172,18 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         return [task1, task2, task3]
     }
     private func syncView() {
+        filter = ToDoListContext.instance.currentFilter
         taskListTableView.reloadData()
         if let firstRow = filter.firstTask {
             taskListTableView.scrollToRow(at: IndexPath.init(row: firstRow, section: 0), at: .top, animated: false)
         }
+        filterLabel.attributedText = NSAttributedString.init(string: filter.name, attributes: ToDoListContext.instance.FilterDropdownAttributes)
+        /*
+        let states: [UIControlState] = [.disabled, .focused, .highlighted, .normal]
+        for state in states {
+        filtersDropdownButton.setAttributedTitle(NSAttributedString.init(string: filter.name, attributes: ToDoListContext.instance.FilterDropdownAttributes), for: state)
+        }
+ */
     }
     }
 

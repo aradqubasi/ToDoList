@@ -34,16 +34,15 @@
                                 <rect key="frame" x="16" y="12" width="68" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="9xI-cr-b5a"/>
-                                    <constraint firstAttribute="width" constant="68" id="N2K-hr-DLe"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="N2K-hr-DLe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeN-ls-Rkj">
-                                <rect key="frame" x="16" y="13" width="91" height="25"/>
+                                <rect key="frame" x="16" y="13" width="84" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="91" id="0KX-Dn-zKb"/>
                                     <constraint firstAttribute="height" constant="25" id="cUr-1Z-nCD"/>
                                 </constraints>
                                 <state key="normal" image="dropDownButton">
@@ -192,6 +191,7 @@
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ixE-7w-3Au" secondAttribute="bottom" id="0tK-u0-f58"/>
                             <constraint firstItem="EFw-a7-jns" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="48" id="18Z-N3-Awb"/>
+                            <constraint firstItem="aeN-ls-Rkj" firstAttribute="trailing" secondItem="xOj-af-PDZ" secondAttribute="trailing" constant="16" id="1CI-Lj-c7K"/>
                             <constraint firstAttribute="trailing" secondItem="6HL-fp-7Eb" secondAttribute="trailing" constant="30" id="7fO-Oc-PwM"/>
                             <constraint firstItem="ixE-7w-3Au" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AUQ-eV-d0K"/>
                             <constraint firstItem="xOj-af-PDZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="CRK-ot-ERD"/>
@@ -221,6 +221,7 @@
                     <navigationItem key="navigationItem" id="YOF-Nc-UIh"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="filterLabel" destination="xOj-af-PDZ" id="VX0-db-rWh"/>
                         <outlet property="filtersDropdownButton" destination="aeN-ls-Rkj" id="jrJ-6K-Okp"/>
                         <outlet property="taskListTableView" destination="ixE-7w-3Au" id="37X-M7-Ezg"/>
                         <outlet property="taskNameEdit" destination="Dxs-rU-ngn" id="hdN-Yk-dVW"/>
@@ -1329,6 +1330,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="QAm-RT-Ayf"/>
-        <segue reference="2HK-b0-QNW"/>
+        <segue reference="oX8-ed-gx4"/>
     </inferredMetricsTieBreakers>
 </document>

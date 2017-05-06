@@ -11,7 +11,7 @@ class TasksFilterToday: TasksFilter {
     var filteredTasks: [Task] {
         get {
             let unsortedTasks = ToDoListContext.instance.GetTasks()
-            let filteredTasks = unsortedTasks.drop(while: { return !ToDoListContext.IsToday($0.dueDate) })
+            let filteredTasks = unsortedTasks.filter({ return ToDoListContext.IsToday($0.dueDate) })
             let sortedTasks = filteredTasks.sorted(by: { return $0.dueDate < $1.dueDate})
             return sortedTasks
         }

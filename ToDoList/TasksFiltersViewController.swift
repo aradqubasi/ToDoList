@@ -17,6 +17,7 @@ class TasksFiltersViewController: UIViewController, FiltersStackDelegate {
         super.viewDidLoad()
         filtersStack.delegate = self
         filtersStack.syncView()
+        self.preferredContentSize = CGSize(width: 300, height: filtersStack.preferredHeight)
         // Do any additional setup after loading the view.
     }
 
