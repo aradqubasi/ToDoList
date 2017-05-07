@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class TaskListViewController: UIViewController, UITableViewDataSource, UIPopoverPresentationControllerDelegate, UITextFieldDelegate, UITableViewDelegate {
     //MARK: Properties
@@ -41,6 +42,10 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    // MARK: Update notifications
+    func handleNotification(_ notification: UNNotification) {
+        
     }
     //MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
