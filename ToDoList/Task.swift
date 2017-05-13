@@ -24,7 +24,11 @@ class Task: NSObject, NSCoding {
     var caption: String
     var tDescription: String
     var isDone: Bool
-    var isCancelled: Bool
+    var isCancelled: Bool {
+        get {
+            return dueDate < Date.init()
+        }
+    }
     var dueDate: Date
     var categories: [Category]
     var hashTags: [String]
@@ -38,7 +42,7 @@ class Task: NSObject, NSCoding {
         self.caption = caption
         self.tDescription = description
         self.isDone = false
-        self.isCancelled = false
+        //self.isCancelled = false
         self.dueDate = dueDate
         self.categories = categories
         self.hashTags = hashTags
@@ -64,7 +68,7 @@ class Task: NSObject, NSCoding {
         aCoder.encode(caption, forKey: Task.Keys.caption)
         aCoder.encode(tDescription, forKey: Task.Keys.tDescription)
         aCoder.encode(isDone, forKey: Task.Keys.isDone)
-        aCoder.encode(isCancelled, forKey: Task.Keys.isCancelled)
+        //aCoder.encode(isCancelled, forKey: Task.Keys.isCancelled)
         aCoder.encode(dueDate, forKey: Task.Keys.dueDate)
         aCoder.encode(categories, forKey: Task.Keys.categories)
         aCoder.encode(hashTags, forKey: Task.Keys.hashTags)
@@ -84,7 +88,7 @@ class Task: NSObject, NSCoding {
             fatalError("Task's description is not decoded")
         }
         let isDone = aDecoder.decodeBool(forKey: Task.Keys.isDone)
-        let isCancelled = aDecoder.decodeBool(forKey: Task.Keys.isCancelled)
+        //let isCancelled = aDecoder.decodeBool(forKey: Task.Keys.isCancelled)
         guard let dueDate = aDecoder.decodeObject(forKey: Task.Keys.dueDate) as? Date else {
             fatalError("Task's duedate is not decoded")
         }
@@ -104,10 +108,23 @@ class Task: NSObject, NSCoding {
         self.init(caption: caption, description: description, dueDate: dueDate, categories: categories, hashTags: hashTags)
         self.id = id
         self.isDone = isDone
-        self.isCancelled = isCancelled
+        //self.isCancelled = isCancelled
         self.frequency = frequency
         self.isLiked = isLiked
     }
     
+    // MARK: - Public Methods
+    
+    func complete() {
+        self.isDone = true
+    }
+    
+    func snooze() {
+        self.dueDate.addTimeInterval(900)
+    }
+    
+    func skip() {
+        
+    }
     
 }

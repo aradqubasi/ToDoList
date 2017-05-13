@@ -99,6 +99,9 @@ class ToDoListContext {
     func AddTask(_ newTask: Task) {
         var _tasks = ToDoListContext.instance.GetTasks()
         _tasks.append(newTask)
+        if !newTask.isCancelled {
+            notifications.pushNotification(for: newTask)
+        }
         NSKeyedArchiver.archiveRootObject(_tasks, toFile: ToDoListContext.ArchTasksPath.path)
     }
     func UpdateTask(_ updatedTask: Task) {
@@ -133,11 +136,13 @@ class ToDoListContext {
         }
         return result
     }
-    /*
-    func GetTask(id: UUID) -> Task {
-        return
+    func GetTask(id: UUID) -> Task? {
+        let tasks = GetTasks()
+        let task = tasks.first(where: {(task: Task) in
+            return task.id == id
+        })
+        return task
     }
-    */
     func GetTasks() -> [Task] {
         var _tasks: [Task] = []
         if let tasks = NSKeyedUnarchiver.unarchiveObject(withFile: ToDoListContext.ArchTasksPath.path) as? [Task] {
@@ -234,7 +239,7 @@ class ToDoListContext {
         return [cat1, cat2, cat3, cat4, cat5, cat6]
     }
     private func pregenTasks() -> [Task] {
-        let bundle = Bundle.init(for: type(of: self))
+        //let bundle = Bundle.init(for: type(of: self))
         
         let cal = Calendar.current
         var comp = DateComponents()
@@ -294,7 +299,7 @@ class ToDoListContext {
             fatalError("error -> Design Landing page")
         }
         task6.isDone = true
-        task6.isCancelled = true
+        //task6.isCancelled = true
         
         comp.year = curDay.year
         comp.month = 2
@@ -302,7 +307,7 @@ class ToDoListContext {
         guard let task7 = Task.init(caption: "Dantist appointment", description:  "scary!", dueDate: cal.date(from: comp)!, categories: [], hashTags: [] ) else {
             fatalError("error -> Dantist appointment")
         }
-        task7.isCancelled = true
+        //task7.isCancelled = true
         
         return [task1, task2, task3, task4, task5, task6, task7]
     }
@@ -312,4 +317,24 @@ class ToDoListContext {
     }
     // MARK: - Notification Handling
     
+    private var _notifications: TDNotificationCenter?
+    var notifications: TDNotificationCenter {
+        get {
+            if _notifications == nil {
+                _notifications = TDNotificationCenter.init()
+            }
+            return _notifications!
+        }
+    }
+    private var _notificationToShow: UUID?
+    var notificationToShow: UUID? {
+        get {
+            let id = _notificationToShow
+            _notificationToShow = nil
+            return _notificationToShow
+        }
+        set(new) {
+            _notificationToShow = new
+        }
+    }
 }
