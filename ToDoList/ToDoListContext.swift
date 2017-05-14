@@ -17,12 +17,40 @@ class ToDoListContext {
     static let ArchCategoryPath = ArchiveDirecroty.appendingPathComponent("categories")
     static let ArchTasksPath = ArchiveDirecroty.appendingPathComponent("tasks")
     //MARK: - Helpers
-    static func IsToday(_ day: Date) -> Bool {
-        if let dateDifference = Calendar.current.dateComponents([.day], from: Date.init(), to: day).day, dateDifference == 0 {
-            return true
-        } else {
-            return false
+    static func DateForList(of task: Task) -> String {
+        
+
+        let dueDateFormatter = DateFormatter()
+        var dateString: String = ""
+        if task.frequency == .weekly {
+            dueDateFormatter.dateFormat = "E4, hh:mm a"
+            dateString = dueDateFormatter.string(from: task.dueDate)
         }
+        else if task.frequency == .daily {
+            dueDateFormatter.dateFormat = "hh:mm a"
+            dateString = "Daily, " + dueDateFormatter.string(from: task.dueDate)
+        }
+        else if ToDoListContext.IsToday(task.dueDate) {
+            dueDateFormatter.dateFormat = "hh:mm a"
+            dateString = "Today, " + dueDateFormatter.string(from: task.dueDate)
+        }
+        else {
+            dueDateFormatter.dateFormat = "MMMM, dd"
+            dateString = dueDateFormatter.string(from: task.dueDate)
+        }
+        return dateString
+    }
+    static func IsToday(_ day: Date) -> Bool {
+        let calendar = Calendar.current
+        let now = Date.init()
+        var todayComponents = calendar.dateComponents([.calendar, .year, .month, .day], from: now)
+        todayComponents.hour = 0
+        todayComponents.minute = 0
+        todayComponents.second = 0
+        let today = todayComponents.date!
+        let tomorrow = now.addingTimeInterval(TimeInterval(864000))
+        let isToday: Bool = (day >= today) && (day < tomorrow)
+        return isToday
     }
     func GetFont(size: CGFloat) -> UIFont {
         guard let font = UIFont.init(name: "Avenir-Light", size: size) else {
@@ -121,21 +149,6 @@ class ToDoListContext {
             }
         }
     }
-    func dateToString(_ date: Date) -> String {
-        let calendar = Calendar.current
-        let diff = calendar.dateComponents([.day], from: Date.init(), to: date)
-        let dateFormatter = DateFormatter()
-        var result: String = ""
-        switch diff.day! {
-            case 0:
-                dateFormatter.dateFormat = "hh:mm a"
-                result = "Today, " + dateFormatter.string(from: date)
-            default:
-                dateFormatter.dateFormat = "MMMM, dd"
-                result = dateFormatter.string(from: date)
-        }
-        return result
-    }
     func GetTask(id: UUID) -> Task? {
         let tasks = GetTasks()
         let task = tasks.first(where: {(task: Task) in
@@ -173,7 +186,7 @@ class ToDoListContext {
             _categories = categories
         } else {
             _categories = pregenCategories()
-            //NSKeyedArchiver.archiveRootObject(_categories, toFile: ToDoListContext.ArchCategoryPath.path)
+            NSKeyedArchiver.archiveRootObject(_categories, toFile: ToDoListContext.ArchCategoryPath.path)
         }
         return _categories
     }

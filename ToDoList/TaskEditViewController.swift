@@ -10,8 +10,20 @@ import UIKit
 
 class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
     // MARK: - Properties
-    var task: Task?
-    
+    private var _tasqkId: UUID?
+    var task: Task? {
+        get {
+            var task: Task?
+            if let id = _tasqkId {
+                task = ToDoListContext.instance.GetTask(id: id)
+            }
+            return task
+        }
+        set(new) {
+            _tasqkId = new?.id
+        }
+    }
+    var notifications = ToDoListContext.instance.notifications
     // MARK: - SubViews
     @IBOutlet weak var checkButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
@@ -24,10 +36,10 @@ class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
     @IBOutlet weak var tagsStack: UIStackView!
     var categories: [SelectableCategory] = []
     var tags: [SimpleTag] = []
-    
+    // MARK: - Lifecircle
     override func viewDidLoad() {
         super.viewDidLoad()
-        syncView()
+        //print("viewDidLoad")
         // Do any additional setup after loading the view.
     }
 
@@ -36,6 +48,22 @@ class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //print("viewDidAppear")
+        addObserver(self, forKeyPath: #keyPath(notifications.completingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.skipTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId), options: [.new], context: nil)
+        syncView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //print("viewWillDisappear")
+        removeObserver(self, forKeyPath: #keyPath(notifications.completingTaskId))
+        removeObserver(self, forKeyPath: #keyPath(notifications.skipTaskId))
+        removeObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId))
+    }
     // MARK: - SelectableCategory Delegate
     func onCategoryClick(sender: SelectableCategory) {
         
@@ -100,7 +128,7 @@ class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
         descLabel.text = task.tDescription
         
         //date
-        dateLabel.text = ToDoListContext.instance.dateToString(task.dueDate)
+        dateLabel.text = ToDoListContext.DateForList(of: task)//ToDoListContext.instance.dateToString(task.dueDate)
         
         //categories
         for category in categories {
@@ -151,5 +179,10 @@ class TaskEditViewController: UIViewController, SelectableCategoryDelegate {
         button.setImage(current, for: .normal)
         button.setImage(current, for: .selected)
         button.setImage(next, for: .highlighted)
+    }
+    // MARK: - Notification Handling
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print("TaskEditViewController syncing view by KVO")
+        syncView()
     }
 }

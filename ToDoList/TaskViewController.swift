@@ -17,7 +17,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     var taskHashTags: [String] = []
     var taskDueDate: Date?
     var taskIsReoccuring: Task.Frequency?
-    var taskToEdit: Task?
+    var taskToEdit: UUID?
     var task: Task? {
         get {
             return CreateTask()
@@ -47,7 +47,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
     // MARK: - Initialization
     func setToEdit(task: Task?) {
         if let toEdit = task {
-            taskToEdit = toEdit
+            taskToEdit = toEdit.id
             quickTaskName = toEdit.caption
             taskDescription = toEdit.tDescription
             taskCategories = toEdit.categories
@@ -356,7 +356,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         */
     }
     private func CreateTask() -> Task? {
-        if let editedTask = taskToEdit {
+        if let editedTaskId = taskToEdit, let editedTask = ToDoListContext.instance.GetTask(id: editedTaskId) {
             editedTask.caption = quickTaskName!
             editedTask.tDescription = taskDescription!
             editedTask.dueDate = taskDueDate!
@@ -364,7 +364,8 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             editedTask.hashTags = taskHashTags
             editedTask.frequency = taskIsReoccuring!
             return editedTask
-        } else {
+        }
+        else {
         let task = Task.init(caption: quickTaskName!, description: taskDescription!, dueDate: taskDueDate!, categories: taskCategories, hashTags: taskHashTags)
         task?.frequency = taskIsReoccuring!
         return task

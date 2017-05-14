@@ -46,6 +46,8 @@ class TaskTableViewCell: UITableViewCell, SelectableCategoryDelegate {
         self.captionLabel.attributedText = captionText
         //set description
         //set dueDate
+        dueDateLabel.text = ToDoListContext.DateForList(of: task)
+        /*
         let calendar = Calendar.current
         let diff = calendar.dateComponents([.day], from: Date.init(), to: task.dueDate)
         let dueDateFormatter = DateFormatter()
@@ -55,6 +57,7 @@ class TaskTableViewCell: UITableViewCell, SelectableCategoryDelegate {
         default: dueDateFormatter.dateFormat = "MMMM, dd"
         dueDateLabel.text = dueDateFormatter.string(from: task.dueDate)
         }
+         */
         //set isDone
         let bundle = Bundle(for: type(of: self))
         var stateImage: UIImage?

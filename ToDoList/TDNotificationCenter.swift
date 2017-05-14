@@ -92,7 +92,7 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         let nContent = UNMutableNotificationContent.init()
         nContent.title = task.caption
         nContent.subtitle = task.tDescription
-        nContent.body = "Due in " + ToDoListContext.instance.dateToString(task.dueDate)
+        nContent.body = "Due in " + ToDoListContext.DateForList(of: task)
         nContent.categoryIdentifier = TDNotificationCenter.Keys.UpcommingTaskCategoryId
         nContent.sound = UNNotificationSound.default()//UNNotificationSound(named: "MySound.aiff")
         let attachedTask = [Task.Keys.id : task.id.uuidString]
