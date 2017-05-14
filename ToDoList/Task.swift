@@ -117,10 +117,12 @@ class Task: NSObject, NSCoding {
     
     func complete() {
         self.isDone = true
+        ToDoListContext.instance.UpdateTask(self)
     }
     
     func snooze() {
         self.dueDate.addTimeInterval(900)
+        ToDoListContext.instance.UpdateTask(self)
     }
     
     func skip() {

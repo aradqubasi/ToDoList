@@ -1274,9 +1274,9 @@
         <!--Navigation Controller-->
         <scene sceneID="N38-MJ-aXn">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qYr-Se-J9T" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TaskEditNavigation" automaticallyAdjustsScrollViewInsets="NO" id="qYr-Se-J9T" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="fua-Tx-IkJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="fua-Tx-IkJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

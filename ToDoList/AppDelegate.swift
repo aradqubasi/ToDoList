@@ -14,10 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Application Delegate
     var window: UIWindow?
     
-    lazy var notifications = {
-        return ToDoListContext.instance.notifications
-    }
-    
+    var notifications = ToDoListContext.instance.notifications
+ 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //let notifications = ToDoListContext.instance.notifications
         addObserver(self, forKeyPath: #keyPath(notifications.showingTaskId), options: [.new], context: nil)
@@ -55,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Observer Methods
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        /*
         print("observer hit")
         let root = window?.rootViewController!
         let showView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TaskEdit") as! TaskEditViewController
@@ -62,6 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let showTask = ToDoListContext.instance.GetTask(id: showTaskId)
         showView.task = showTask
         root?.present(showView, animated: true, completion: nil)
+         */
+        let root = window?.rootViewController!
+        let showNavView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TaskEditNavigation") as! UINavigationController
+        let editViewController = showNavView.viewControllers.first as! TaskEditViewController
+        let showTaskId = change?[NSKeyValueChangeKey.newKey] as! UUID
+        let showTask = ToDoListContext.instance.GetTask(id: showTaskId)
+        editViewController.task = showTask
+        root?.present(showNavView, animated: true, completion: nil)
     }
 }
 

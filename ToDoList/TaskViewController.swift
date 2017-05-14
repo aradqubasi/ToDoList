@@ -23,6 +23,7 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
             return CreateTask()
         }
     }
+    var notifications = ToDoListContext.instance.notifications
     
     //var categoryButtons: [CategoryPick] = []
     var categoryControls: [SelectableCategory] = []
@@ -63,13 +64,19 @@ class TaskViewController: UIViewController, UITextFieldDelegate, DeletableTagDel
         syncViewWithModel()
         taskNameEdit.delegate = self
         descriptionEdit.delegate = self
+        addObserver(self, forKeyPath: #keyPath(notifications.completingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.skipTaskId), options: [.new], context: nil)
+
         // Do any additional setup after loading the view.
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        syncViewWithModel()
+    }
     //MARK: - UITextFieldDelegate Methods
     func textFieldDidBeginEditing(_ textField: UITextField) {
         syncViewWithModel()

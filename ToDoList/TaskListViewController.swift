@@ -19,6 +19,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     }
     var taskIndexToEdit: IndexPath?
     var filter: TasksFilter = ToDoListContext.instance.currentFilter
+    var notifications = ToDoListContext.instance.notifications
     @IBOutlet weak var taskListTableView: TaskListTableView!
     @IBOutlet weak var filtersDropdownButton: UIButton!
     @IBOutlet weak var taskNameEdit: UITextField!
@@ -36,6 +37,11 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         taskNameEdit.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         taskNameEdit.layer.borderColor = ToDoListContext.instance.tdPaleGrey.cgColor
+        
+        addObserver(self, forKeyPath: #keyPath(notifications.completingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.skipTaskId), options: [.new], context: nil)
+
         syncView()
     }
 
@@ -43,9 +49,21 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    // MARK: Update notifications
-    func handleNotification(_ notification: UNNotification) {
-        
+    // MARK: - Update notifications
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(notifications.completingTaskId) {
+            print("update table list complete")
+            syncView()
+        }
+        else if keyPath == #keyPath(notifications.snoozingTaskId) {
+            print("update table list snooze")
+            syncView()
+
+        }
+        else if keyPath == #keyPath(notifications.skipTaskId) {
+            print("update table list skip")
+            syncView()
+        }
     }
     //MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
