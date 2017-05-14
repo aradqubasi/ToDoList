@@ -62,6 +62,15 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         }
         else if keyPath == #keyPath(notifications.skipTaskId) {
             print("update table list skip")
+            let toRemove = notifications.skipTaskId!
+            let tasks = ToDoListContext.instance.GetTasks()
+            let indexToRemove = tasks.index(where: {(next: Task) -> Bool in
+                let hit = next.id == toRemove
+                return hit
+            })
+            tasks[indexToRemove!].cancel()
+            taskListTableView.deleteRows(at: [IndexPath(row: indexToRemove!, section: 0)], with: .fade)
+            //taskListTableView.cell
             syncView()
         }
     }
@@ -206,7 +215,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         for state in states {
         filtersDropdownButton.setAttributedTitle(NSAttributedString.init(string: filter.name, attributes: ToDoListContext.instance.FilterDropdownAttributes), for: state)
         }
- */
-    }
+         */
+        }
     }
 

@@ -17,13 +17,16 @@ class ToDoListContext {
     static let ArchCategoryPath = ArchiveDirecroty.appendingPathComponent("categories")
     static let ArchTasksPath = ArchiveDirecroty.appendingPathComponent("tasks")
     //MARK: - Helpers
+    static var snoozeTime: TimeInterval {
+        return 5
+    }
     static func DateForList(of task: Task) -> String {
         
 
         let dueDateFormatter = DateFormatter()
         var dateString: String = ""
         if task.frequency == .weekly {
-            dueDateFormatter.dateFormat = "E4, hh:mm a"
+            dueDateFormatter.dateFormat = "EEEE, hh:mm a"
             dateString = dueDateFormatter.string(from: task.dueDate)
         }
         else if task.frequency == .daily {
@@ -148,6 +151,7 @@ class ToDoListContext {
                 break
             }
         }
+        NSKeyedArchiver.archiveRootObject(_tasks, toFile: ToDoListContext.ArchTasksPath.path)
     }
     func GetTask(id: UUID) -> Task? {
         let tasks = GetTasks()

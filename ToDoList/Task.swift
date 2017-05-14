@@ -29,7 +29,56 @@ class Task: NSObject, NSCoding {
             return dueDate < Date.init()
         }
     }
-    var dueDate: Date
+    private var _dueDate: Date
+    var dueDate: Date {
+        get {
+            let now = Date.init()
+            if self.frequency == .daily || _dueDate > now {
+                return _dueDate
+            }
+            else if self.frequency == .daily {
+                let now = Date.init()
+                var nowStruct = Calendar.current.dateComponents([.year, .month, .day], from: now)
+                var dueDateStruct = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: _dueDate)
+                var newDueDateStruct = DateComponents()
+                newDueDateStruct.calendar = Calendar.current
+                newDueDateStruct.year = nowStruct.year
+                newDueDateStruct.month = nowStruct.month
+                if (now > _dueDate) {
+                    newDueDateStruct.day = nowStruct.day
+                }
+                else {
+                    newDueDateStruct.day = dueDateStruct.day
+                }
+                newDueDateStruct.hour = dueDateStruct.hour
+                newDueDateStruct.minute = dueDateStruct.minute
+                _dueDate = newDueDateStruct.date!
+            }
+            else if self.frequency == .weekly {
+                let now = Date.init()
+                var nowStruct = Calendar.current.dateComponents([.year, .month, .day, .weekdayOrdinal], from: now)
+                var dueDateStruct = Calendar.current.dateComponents([.weekday, .hour, .minute], from: _dueDate)
+                var newDueDateStruct = DateComponents()
+                newDueDateStruct.calendar = Calendar.current
+                newDueDateStruct.year = nowStruct.year
+                newDueDateStruct.month = nowStruct.month
+                newDueDateStruct.weekday = dueDateStruct.weekday
+                if (now > _dueDate) {
+                    newDueDateStruct.weekdayOrdinal = nowStruct.weekdayOrdinal! + 1
+                }
+                else {
+                    newDueDateStruct.weekdayOrdinal = nowStruct.weekdayOrdinal
+                }
+                newDueDateStruct.hour = dueDateStruct.hour
+                newDueDateStruct.minute = dueDateStruct.minute
+                _dueDate = newDueDateStruct.date!
+            }
+            return _dueDate
+        }
+        set(new) {
+            _dueDate = dueDate
+        }
+    }
     var categories: [Category]
     var hashTags: [String]
     var frequency: Task.Frequency
@@ -43,7 +92,7 @@ class Task: NSObject, NSCoding {
         self.tDescription = description
         self.isDone = false
         //self.isCancelled = false
-        self.dueDate = dueDate
+        self._dueDate = dueDate
         self.categories = categories
         self.hashTags = hashTags
         self.frequency = .once
@@ -69,7 +118,7 @@ class Task: NSObject, NSCoding {
         aCoder.encode(tDescription, forKey: Task.Keys.tDescription)
         aCoder.encode(isDone, forKey: Task.Keys.isDone)
         //aCoder.encode(isCancelled, forKey: Task.Keys.isCancelled)
-        aCoder.encode(dueDate, forKey: Task.Keys.dueDate)
+        aCoder.encode(_dueDate, forKey: Task.Keys.dueDate)
         aCoder.encode(categories, forKey: Task.Keys.categories)
         aCoder.encode(hashTags, forKey: Task.Keys.hashTags)
         //aCoder.encode(frequency, forKey: Task.Keys.frequency)
@@ -125,8 +174,8 @@ class Task: NSObject, NSCoding {
         ToDoListContext.instance.UpdateTask(self)
     }
     
-    func skip() {
-        
+    func cancel() {
+        ToDoListContext.instance.RemoveTask(self)
     }
     
 }

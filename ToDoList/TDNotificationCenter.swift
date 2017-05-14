@@ -42,7 +42,7 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         //actions
         let completeAction = UNNotificationAction(identifier: TDNotificationCenter.Keys.CompleteActionId, title: "Complete", options: [])
         let snoozeAction = UNNotificationAction(identifier: TDNotificationCenter.Keys.SnoozeActionId, title: "Snooze", options: [])
-        let removeAction = UNNotificationAction(identifier: TDNotificationCenter.Keys.SkipActionId, title: "Skip", options: .destructive)
+        let removeAction = UNNotificationAction(identifier: TDNotificationCenter.Keys.SkipActionId, title: "Cancel", options: .destructive)
         let showAction = UNNotificationAction(identifier: TDNotificationCenter.Keys.ShowActionId, title: "Show", options: .foreground)
         //let textAction = UNTextInputNotificationAction(identifier: "TYPE_SOMETHING", title: "Type", options: UNNotificationActionOptions.authenticationRequired, textInputButtonTitle: "Type", textInputPlaceholder: "Something")
         //configure categories
@@ -91,16 +91,25 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
         let center = UNUserNotificationCenter.current()
         let nContent = UNMutableNotificationContent.init()
         nContent.title = task.caption
-        nContent.subtitle = task.tDescription
-        nContent.body = "Due in " + ToDoListContext.DateForList(of: task)
+        //nContent.subtitle = task.tDescription
+        //nContent.body = "Due in " + ToDoListContext.DateForList(of: task)
+        nContent.body = task.tDescription
         nContent.categoryIdentifier = TDNotificationCenter.Keys.UpcommingTaskCategoryId
         nContent.sound = UNNotificationSound.default()//UNNotificationSound(named: "MySound.aiff")
         let attachedTask = [Task.Keys.id : task.id.uuidString]
         nContent.userInfo = attachedTask
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: task.dueDate)
+        var precision: Set<Calendar.Component> = []
+        if task.frequency == .once {
+            precision = [.year, .month, .day, .hour, .minute, .second]
+        } else if task.frequency == .daily {
+            precision = [.hour, .minute, .second]
+        } else if task.frequency == .weekly {
+            precision = [.weekday]
+        }
+        let components = Calendar.current.dateComponents(precision, from: task.dueDate)
         let cTrigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         //let cTrigger = UNTimeIntervalNotificationTrigger.init(timeInterval: TimeInterval.init(15), repeats: false)
-        let nRequest = UNNotificationRequest(identifier: task.id.uuidString, content: nContent, trigger: cTrigger)
+        let nRequest = UNNotificationRequest(identifier: UUID().uuidString, content: nContent, trigger: cTrigger)
         center.add(nRequest, withCompletionHandler: {(error: Error?) in
             if let theError = error {
                 print(theError.localizedDescription)
@@ -112,6 +121,28 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
             print("!")
             for request in requests {
                 print(request.content.title)
+            }
+        })
+    }
+    
+    func snoozeNotification(of task: Task, by snoozeTime: TimeInterval = 900){
+        let center = UNUserNotificationCenter.current()
+        let nContent = UNMutableNotificationContent.init()
+        nContent.title = task.caption
+        //nContent.subtitle = task.tDescription
+        //nContent.body = "Due in " + ToDoListContext.DateForList(of: task)
+        nContent.body = task.tDescription
+        nContent.categoryIdentifier = TDNotificationCenter.Keys.UpcommingTaskCategoryId
+        nContent.sound = UNNotificationSound.default()//UNNotificationSound(named: "MySound.aiff")
+        let attachedTask = [Task.Keys.id : task.id.uuidString]
+        nContent.userInfo = attachedTask
+        let cTrigger = UNTimeIntervalNotificationTrigger.init(timeInterval: snoozeTime, repeats: false)
+        let nRequest = UNNotificationRequest(identifier: UUID().uuidString, content: nContent, trigger: cTrigger)
+        center.add(nRequest, withCompletionHandler: {(error: Error?) in
+            if let theError = error {
+                print(theError.localizedDescription)
+            } else {
+                print("notification not an error")
             }
         })
     }
@@ -130,6 +161,30 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
             }
             center.removePendingNotificationRequests(withIdentifiers: requestToRemoveIds)
         })
+    }
+    
+    func unschedule(task: Task) {
+        let center = UNUserNotificationCenter.current()
+        var toRemove: [String] = []
+        center.getPendingNotificationRequests(completionHandler: { (requests: [UNNotificationRequest]) -> Void in
+            for request in requests {
+                if let id = request.content.userInfo[Task.Keys.id] as? UUID, id == task.id {
+                    toRemove.append(request.identifier)
+                }
+            }
+        })
+        center.removePendingNotificationRequests(withIdentifiers: toRemove)
+        toRemove.removeAll()
+        
+        center.getDeliveredNotifications(completionHandler: { (delivereds: [UNNotification]) -> Void in
+            for delivered in delivereds {
+                if let id = delivered.request.content.userInfo[Task.Keys.id] as? UUID, id == task.id {
+                    toRemove.append(delivered.request.identifier)
+                }
+            }
+        })
+        center.removeDeliveredNotifications(withIdentifiers: toRemove)
+        toRemove.removeAll()
     }
     
     // MARK: - UNNotificationCenterDelegate
@@ -152,15 +207,17 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
                 self.snoozingTaskId = id
                 if let task = ToDoListContext.instance.GetTask(id: id) {
                     task.snooze()
+                    snoozeNotification(of: task, by: ToDoListContext.snoozeTime)
                 }
             }
         }
         else if response.actionIdentifier == TDNotificationCenter.Keys.SkipActionId {
-            print("skip")
+            print("cancel")
             if let id = uuid {
                 self.skipTaskId = id
                 if let task = ToDoListContext.instance.GetTask(id: id) {
-                    task.skip()
+                    unschedule(task: task)
+                    task.cancel()
                 }
             }
         }
@@ -184,9 +241,11 @@ class TDNotificationCenter: NSObject, UNUserNotificationCenterDelegate {
             print("sysdismiss")
             if let id = uuid {
                 self.skipTaskId = id
+                /*
                 if let task = ToDoListContext.instance.GetTask(id: id) {
                     task.skip()
                 }
+                */
             }
         }
         else if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
