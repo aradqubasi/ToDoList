@@ -133,4 +133,6 @@ class SelectableCategory: UIControl {
         isChecked = to
         paintByState()
     }
+    // MARK: - GestureRecognizedDelegate Methods
+    
 }
