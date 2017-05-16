@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "health-active.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "healthCat.png",
+      "filename" : "health-active@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "health-active@3x.png",
       "scale" : "3x"
     }
   ],
