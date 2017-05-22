@@ -120,6 +120,14 @@ class SelectableCategory: UIControl {
         self.backgroundColor = background
         label?.textColor = fontColor
     }
+    private func reattachByState() {
+        if isChecked {
+            point!.isHidden = true
+        }
+        else {
+            point!.isHidden = false
+        }
+    }
     func onClick(sender: SelectableCategory) {
         if let d = delegate {
             isChecked = d.onStateChange(from: isChecked)
@@ -128,6 +136,7 @@ class SelectableCategory: UIControl {
             isChecked = !isChecked
         }
         paintByState()
+        reattachByState()
     }
     func setState(to: Bool) {
         isChecked = to

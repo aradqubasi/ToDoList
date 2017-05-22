@@ -21,6 +21,13 @@ class TaskListTableView: UITableView {
         // Pass the selected object to the new view controller.
     }
     */
+    // MARK: - Event passthrough
+    override func touchesShouldCancel(in view: UIView) -> Bool {
+        if view is SelectableCategory {
+            return true
+        }
+        return super.touchesShouldCancel(in: view)
+    }
     //MARK: Private methods
     
 }
