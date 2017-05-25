@@ -76,6 +76,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
         //self.view.backgroundColor = UIColor.blue
+        //let gradientLayer = CAGradientLayer()
+        //gradientLayer.colors = [UIColor.white, I]
         blurView = UIView(frame: self.view.frame)
         blurView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         //blurView?.backgroundColor.alp

@@ -21,6 +21,7 @@ class SelectableCategory: UIControl {
     let edgeToPoint: CGFloat = 0
     var pointWidth: CGFloat = 0
     let pointToLabel: CGFloat = 8
+    
     let edgeToLabel: CGFloat = 8
     var labelWidth: CGFloat = 0
     let labelToEdge: CGFloat = 8
