@@ -126,6 +126,9 @@ class ToDoListContext {
     var segueId_taskFiltersToTaskList: String {
         return "taskFiltersToTaskList"
     }
+    var segueId_categoriesToTasks: String {
+        return "categoriesToTasks"
+    }
     //MARK: Repositary methods
     func AddTask(_ newTask: Task) {
         var _tasks = ToDoListContext.instance.GetTasks()

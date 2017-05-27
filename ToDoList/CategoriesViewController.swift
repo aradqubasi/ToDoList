@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController, UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate {
+class CategoriesViewController: UIViewController, UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate, UICollectionViewDelegate {
 
     //MARK: Properties
     
@@ -30,6 +30,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         //loadSampleCategories()
         loadSampleFilterOptions()
         categoriesGrid.dataSource = self
+        categoriesGrid.delegate = self
         filterPicker.delegate = self
         filterPicker.dataSource = self
         
@@ -55,7 +56,17 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         let category = categories[indexPath.row]
         cell.icon.image = category.icon
         cell.name.text = category.name
-        cell.taskCount.text = "0 Tasks"
+        let count = ToDoListContext.instance.GetTasks().filter({(task: Task) in
+            if task.categories.contains(where: { (_category: Category) in
+                return _category.id == category.id
+            }) {
+                return true
+            }
+            else {
+                return false
+            }
+        }).count
+        cell.taskCount.text = "\(count) Tasks"
         return cell
     }
     
@@ -100,6 +111,14 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             pop?.sourceRect = CGRect(origin: CGPoint.zero, size: CGSize.zero)
             pop?.delegate = self
         }
+        else if segue.identifier == ToDoListContext.instance.segueId_categoriesToTasks {
+            //print("categories preparing for tasks")
+            //print(sender)
+            if let tasks = segue.destination as? TaskListViewController/*, let category = sender as? Category*/, let selection = categoriesGrid.indexPathsForSelectedItems?[0] {
+                //tasks.filter = TasksFilterCategory(category: categories[selection.row])
+                ToDoListContext.instance.currentFilter = TasksFilterCategory(category: categories[selection.row])
+            }
+        }
     }
 
     //MARK: Actions
@@ -116,5 +135,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     //MARK: Private methods
     func loadSampleFilterOptions() {
         filterOptions = ["option1", "option2", "option3"]
+    }
+    
+    // MARK: - CollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //print("selected category N\(indexPath)")
+        self.performSegue(withIdentifier: ToDoListContext.instance.segueId_categoriesToTasks, sender: categories[indexPath.row])
     }
 }

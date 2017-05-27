@@ -49,6 +49,14 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //print("viewWillDisappear")
+        removeObserver(self, forKeyPath: #keyPath(notifications.completingTaskId))
+        removeObserver(self, forKeyPath: #keyPath(notifications.skipTaskId))
+        removeObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId))
+    }
     // MARK: - Update notifications
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == #keyPath(notifications.completingTaskId) {
