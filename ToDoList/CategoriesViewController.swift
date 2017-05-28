@@ -156,8 +156,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     // MARK: - Animated
     func shapeAsNewCategory(_ view: UIView, at superView: UIView) {
         view.frame = CGRect(x: 16, y: 201, width: 382, height: 279)
-        let closeButton = UIButton.init(frame: CGRect(x: 349, y: 0, width: 21, height: 21)
-        let nameEdit = UITextField(frame: CGRect(x: 16, y: 55, width: 330, height: 29)
+        let closeButton = UIButton.init(frame: CGRect(x: 349, y: 0, width: 21, height: 21))
+        let nameEdit = UITextField(frame: CGRect(x: 16, y: 55, width: 330, height: 29))
     }
     
     func presentBlurView() {
