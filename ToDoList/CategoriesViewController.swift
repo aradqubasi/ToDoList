@@ -22,6 +22,8 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     var categories = ToDoListContext.instance.GetCategories()
     var filterOptions = [String]()
     var blurView : UIView? = nil
+    var newCategoryView: UIView = UIView.init(frame: CGRect.zero)
+    var newBlurView: UIView = UIView.init(frame: CGRect.zero)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +35,14 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         categoriesGrid.delegate = self
         filterPicker.delegate = self
         filterPicker.dataSource = self
-        
+        //self.view.addSubview(newBlurView)
+        //self.view.addSubview(newCategoryView)
+        let rootView = ToDoListContext.instance.rootView
+        rootView.addSubview(newBlurView)
+        rootView.addSubview(newCategoryView)
+        //for view in rootView.subviews {
+        //    print(view)
+        //}
     }
 
     override func didReceiveMemoryWarning() {
@@ -128,6 +137,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBAction func addCategoryClick(_ sender: UIButton) {
     }
     @IBAction func showListClick(_ sender: UIButton) {
+        presentBlurView()
     }
     @IBAction func showGridClick(_ sender: UIButton) {
     }
@@ -142,4 +152,31 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         //print("selected category N\(indexPath)")
         self.performSegue(withIdentifier: ToDoListContext.instance.segueId_categoriesToTasks, sender: categories[indexPath.row])
     }
+    
+    // MARK: - Animated
+    func shapeAsNewCategory(_ view: UIView, at superView: UIView) {
+        view.frame = CGRect(x: 16, y: 201, width: 382, height: 279)
+        let closeButton = UIButton.init(frame: CGRect(x: 349, y: 0, width: 21, height: 21)
+        let nameEdit = UITextField(frame: CGRect(x: 16, y: 55, width: 330, height: 29)
+    }
+    
+    func presentBlurView() {
+        let newFrame = CGRect(x: -300, y: 0, width: 300, height: ToDoListContext.instance.rootView.frame.height)
+        self.newCategoryView.backgroundColor = UIColor.black
+        self.newCategoryView.frame = newFrame
+        
+        self.newBlurView.frame = ToDoListContext.instance.rootView.frame//self.view.frame
+        //newBlurView.backgroundColor = UIColor.white
+        let gLayer = CAGradientLayer()
+        gLayer.frame = newBlurView.bounds
+        gLayer.opacity = 0.83
+        gLayer.colors = [ToDoListContext.instance.tdGradientBlue.cgColor, ToDoListContext.instance.tdGradientGreen.cgColor]
+        newBlurView.layer.insertSublayer(gLayer, at: 0)
+        
+        UIView.animate(withDuration: 0.225, delay: 0, options: [.curveEaseIn], animations: {
+            self.newCategoryView.frame.origin.x = 0
+            //.withAlphaComponent(0.5)
+        }, completion: nil)
+    }
+    
 }

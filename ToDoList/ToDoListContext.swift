@@ -113,6 +113,12 @@ class ToDoListContext {
     var tdDarkGrey: UIColor {
         return UIColor(red: 46.0 / 255.0, green: 50.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
     }
+    var tdGradientGreen: UIColor {
+        return UIColor(red: 61.0 / 255.0, green: 227.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
+    }
+    var tdGradientBlue: UIColor {
+        return UIColor(red: 28.0 / 255.0, green: 197.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
+    }
     // MARK: - Segue Identifiers
     var segueId_tasksToTaskEdit: String {
         return "tasksToTaskEdit"
@@ -355,6 +361,19 @@ class ToDoListContext {
         }
         set(new) {
             _notificationToShow = new
+        }
+    }
+    // MARK: root
+    private var _rootView: UIView?
+    var rootView: UIView {
+        get {
+            guard let root = _rootView else {
+                fatalError("root view does specified")
+            }
+            return root
+        }
+        set(new) {
+            _rootView = new
         }
     }
 }

@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let notifications = ToDoListContext.instance.notifications
         addObserver(self, forKeyPath: #keyPath(notifications.showingTaskId), options: [.new], context: nil)
         print("didFinishLaunchingWithOptions")
+        let root = window?.rootViewController!
+        //print(root)
+        ToDoListContext.instance.rootView = (root?.view)!
         return true
     }
 

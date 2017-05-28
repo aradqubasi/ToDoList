@@ -38,9 +38,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
         // Do any additional setup after loading the view, typically from a nib.
         taskNameEdit.layer.borderColor = ToDoListContext.instance.tdPaleGrey.cgColor
         
-        addObserver(self, forKeyPath: #keyPath(notifications.completingTaskId), options: [.new], context: nil)
-        addObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId), options: [.new], context: nil)
-        addObserver(self, forKeyPath: #keyPath(notifications.skipTaskId), options: [.new], context: nil)
+
 
         syncView()
     }
@@ -48,6 +46,13 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UIPopover
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObserver(self, forKeyPath: #keyPath(notifications.completingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.snoozingTaskId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(notifications.skipTaskId), options: [.new], context: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
