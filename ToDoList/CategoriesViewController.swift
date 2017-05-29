@@ -22,8 +22,25 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     var categories = ToDoListContext.instance.GetCategories()
     var filterOptions = [String]()
     var blurView : UIView? = nil
-    var newCategoryView: UIView = UIView.init(frame: CGRect.zero)
-    var newBlurView: UIView = UIView.init(frame: CGRect.zero)
+    private var _newCategoryView: UIView?
+    var newCategoryView: UIView {
+        get {
+            if _newCategoryView == nil {
+                //_newCategoryView = shapeAsNewCategory()
+                _newCategoryView = NewCategoryView()
+            }
+            return _newCategoryView!
+        }
+    }
+    private var _newBlurView : UIView?
+    var newBlurView: UIView {
+        get {
+            if _newBlurView == nil {
+                _newBlurView = shapeAsNewCategoryBlur()
+            }
+            return _newBlurView!
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,11 +154,14 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     @IBAction func addCategoryClick(_ sender: UIButton) {
     }
     @IBAction func showListClick(_ sender: UIButton) {
-        presentBlurView()
+        //presentBlurView()
+        presentNewCategory()
     }
     @IBAction func showGridClick(_ sender: UIButton) {
     }
-    
+    func onCloseNewCategoryClick(_ sender: UIButton) {
+        hideNewCategory()
+    }
     //MARK: Private methods
     func loadSampleFilterOptions() {
         filterOptions = ["option1", "option2", "option3"]
@@ -154,10 +174,83 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     // MARK: - Animated
-    func shapeAsNewCategory(_ view: UIView, at superView: UIView) {
-        view.frame = CGRect(x: 16, y: 201, width: 382, height: 279)
-        let closeButton = UIButton.init(frame: CGRect(x: 349, y: 0, width: 21, height: 21))
+    private func shapeAsNewCategory() -> UIView {
+        //let newCategorySuperFrame = CGRect(x: 16, y: 201, width: 382, height: 279)
+        let newCategorySuperFrame = CGRect(x: 16, y: -279, width: 382, height: 279)
+        let view = UIView(frame: newCategorySuperFrame)
+        
+        let newCategoryFrame = CGRect(x: 0, y: 39, width: newCategorySuperFrame.width, height: 240)
+        let newCategoryView = UIView(frame: newCategoryFrame)
+        newCategoryView.layer.cornerRadius = 9
+        newCategoryView.backgroundColor = UIColor.white
+        newCategoryView.layer.opacity = 1
+        view.addSubview(newCategoryView)
+        
+        let closeButton = UIButton(frame: CGRect(x: 349, y: 0, width: 21, height: 21))
+        closeButton.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
+        closeButton.addTarget(self, action: #selector(onCloseNewCategoryClick(_:)), for: .touchUpInside)
+        view.addSubview(closeButton)
+        
         let nameEdit = UITextField(frame: CGRect(x: 16, y: 55, width: 330, height: 29))
+        nameEdit.font = UIFont(name: "Avenir-Light", size: 21)
+        nameEdit.textColor = UIColor(red: 69.0 / 255.0, green: 75.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
+        nameEdit.placeholder = "Category Name"
+        view.addSubview(nameEdit)
+        
+        let nameToDescriptionSeparator = UIView(frame: CGRect(x: 0, y: 103, width: newCategorySuperFrame.width, height: 1))
+        nameToDescriptionSeparator.backgroundColor = UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1)
+        view.addSubview(nameToDescriptionSeparator)
+        
+        let descriptionEdit = UITextView(frame: CGRect(x: 16, y: 120, width: newCategoryFrame.width - 32, height: 111))
+        descriptionEdit.font = UIFont(name: "Avenir-Book", size: 14)
+        descriptionEdit.textColor = UIColor(red: 197.0 / 255.0, green: 201.0 / 255.0, blue: 201.0 / 255.0, alpha: 1)
+        descriptionEdit.text = "Description"
+        descriptionEdit.returnKeyType = .done
+        view.addSubview(descriptionEdit)
+        
+        let descriptionToFooterSeparator = UIView(frame: CGRect(x: 0, y: 231, width: newCategorySuperFrame.width, height: 1))
+        descriptionToFooterSeparator.backgroundColor = UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1)
+        view.addSubview(descriptionToFooterSeparator)
+        
+        let createButton = UIButton(frame: CGRect(x: 315, y: 243, width: 54, height: 25))
+        let createTitle = NSMutableAttributedString.init(string: "Create", attributes: ToDoListContext.instance.CreateNewCategoryAttributes)
+        createButton.setAttributedTitle(createTitle, for: .normal)
+        view.addSubview(createButton)
+        
+        return view
+    }
+    
+    private func shapeAsNewCategoryBlur() -> UIView {
+        let fullScreen = CGRect(x: 0, y: -736, width: 414, height: 736)
+        let view = UIView(frame: fullScreen)
+        let gLayer = CAGradientLayer()
+        gLayer.frame = view.bounds
+        gLayer.opacity = 0.83
+        gLayer.colors = [ToDoListContext.instance.tdGradientBlue.cgColor, ToDoListContext.instance.tdGradientGreen.cgColor]
+        view.layer.insertSublayer(gLayer, at: 0)
+        return view
+    }
+    
+    func presentNewCategory() {
+        self.newBlurView.frame.origin.y = 0
+        self.newBlurView.alpha = 1
+        UIView.animate(withDuration: 0.225, delay: 0, options: [.curveEaseIn], animations: {
+            self.newCategoryView.frame.origin.y = 201
+        }, completion: { (isCompleted: Bool) in
+            //UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse], animations: {
+            //    self.newCategoryView.frame.origin.y = 211
+            //}, completion: nil)
+        })
+    }
+    
+    
+    func hideNewCategory() {
+        UIView.animate(withDuration: 0.225, delay: 0, options: [.curveEaseOut], animations: {
+            self.newCategoryView.frame.origin.y = -279
+            self.newBlurView.alpha = 0
+        }, completion: { (isCompleted: Bool) in
+            self.newBlurView.frame.origin.y = -736
+        })
     }
     
     func presentBlurView() {
