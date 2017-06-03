@@ -79,9 +79,11 @@ class ToDoListContext {
     var FilterDropdownAttributes: [String : Any?] {
         return [NSFontAttributeName: self.GetFont(size: 16), NSForegroundColorAttributeName: self.tdDarkGrey] 
     }
+    /*
     var CreateNewCategoryAttributes: [String : Any]? {
         return [NSFontAttributeName: UIFont.init(name: "Avenir-Light", size: 18)!, NSForegroundColorAttributeName: self.tdDarkGrey]
     }
+    */
     func SelectableCategoryFont() -> UIFont {
         return GetFont(size: 13)
     }

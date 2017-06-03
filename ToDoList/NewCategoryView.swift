@@ -14,15 +14,42 @@ class NewCategoryView: UIView, UITextFieldDelegate, UITextViewDelegate {
     
     var delegate: NewCategoryViewDelegate?
     
+    // MARK: - Private Properties
+    
+    private var descriptionEditIsEmpty: Bool!
+    
+    private var descriptionEditEmptyColor: UIColor {
+        return UIColor(red: 197.0 / 255.0, green: 201.0 / 255.0, blue: 201.0 / 255.0, alpha: 1)
+    }
+    
+    private var descriptionEditFullColor: UIColor {
+        return UIColor(red: 69.0 / 255.0, green: 75.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
+    }
+    
+    private var descriptionEditEmptyText: String {
+        return "Description"
+    }
+    
+    private var createButtonNormalTitle: NSMutableAttributedString {
+        let attributes = [NSFontAttributeName: UIFont.init(name: "Avenir-Light", size: 18)!, NSForegroundColorAttributeName: ToDoListContext.instance.tdDarkGrey]
+        let title = NSMutableAttributedString.init(string: "Create", attributes: attributes)
+        return title
+    }
+    
+    private var createButtonDisabledTitle: NSMutableAttributedString {
+        let attributes = [NSFontAttributeName: UIFont.init(name: "Avenir-Light", size: 18)!, NSForegroundColorAttributeName: UIColor(red: 197.0 / 255.0, green: 201.0 / 255.0, blue: 201.0 / 255.0, alpha: 1)]
+        let title = NSMutableAttributedString.init(string: "Create", attributes: attributes)
+        return title
+    }
     // MARK: - Subviews
     
-    var createButton: UIButton
+    var createButton: UIButton!
     
-    var closeButton: UIButton
+    var closeButton: UIButton!
     
-    var nameEdit: UITextField
+    var nameEdit: UITextField!
     
-    var descriptionEdit: UITextView
+    var descriptionEdit: UITextView!
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -58,20 +85,21 @@ class NewCategoryView: UIView, UITextFieldDelegate, UITextViewDelegate {
         
         let descriptionEdit = UITextView(frame: CGRect(x: 16, y: 120, width: newCategoryFrame.width - 32, height: 111))
         descriptionEdit.font = UIFont(name: "Avenir-Book", size: 14)
-        descriptionEdit.textColor = UIColor(red: 197.0 / 255.0, green: 201.0 / 255.0, blue: 201.0 / 255.0, alpha: 1)
-        descriptionEdit.text = "Description"
+        descriptionEdit.textColor = self.descriptionEditEmptyColor
+        descriptionEdit.text = self.descriptionEditEmptyText
         descriptionEdit.returnKeyType = .done
         descriptionEdit.delegate = self
         self.addSubview(descriptionEdit)
         self.descriptionEdit = descriptionEdit
+        descriptionEditIsEmpty = true
         
         let descriptionToFooterSeparator = UIView(frame: CGRect(x: 0, y: 231, width: newCategorySuperFrame.width, height: 1))
         descriptionToFooterSeparator.backgroundColor = UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1)
         self.addSubview(descriptionToFooterSeparator)
         
         let createButton = UIButton(frame: CGRect(x: 315, y: 243, width: 54, height: 25))
-        let createTitle = NSMutableAttributedString.init(string: "Create", attributes: ToDoListContext.instance.CreateNewCategoryAttributes)
-        createButton.setAttributedTitle(createTitle, for: .normal)
+        createButton.setAttributedTitle(self.createButtonNormalTitle, for: .normal)
+        createButton.setAttributedTitle(self.createButtonDisabledTitle, for: .disabled)
         createButton.addTarget(self, action: #selector(onCreateClick(_:)), for: .touchUpInside)
         createButton.isEnabled = false
         self.addSubview(createButton)
@@ -85,34 +113,91 @@ class NewCategoryView: UIView, UITextFieldDelegate, UITextViewDelegate {
     //MARK: - UITextFieldDelegate Methods
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        syncViewWithModel()
+
     }
-    
+ 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === taskNameEdit {
-            quickTaskName = textField.text
-        } else if textField === descriptionEdit {
-            taskDescription = textField.text
+        setCreateButtonState()
+    }
+    
+    // MARK: - UITextViewDelegate Methods
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if descriptionEditIsEmpty {
+            descriptionEdit.text = ""
+            descriptionEdit.textColor = descriptionEditFullColor
+            descriptionEditIsEmpty = false
         }
-        syncViewWithModel()
+    }
+/*
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        return true
+    }
+ */
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if descriptionEdit.text == "" {
+            descriptionEdit.text = descriptionEditEmptyText
+            descriptionEdit.textColor = descriptionEditEmptyColor
+            descriptionEditIsEmpty = true
+        }
+        setCreateButtonState()
     }
     
     // MARK: - Private Methods
     
     func onCloseClick(_ sender: UIButton) {
-        
+        if self.delegate != nil {
+            self.delegate!.onCancel(sender: self)
+        }
     }
     
     func onCreateClick(_ sender: UIButton) {
-        
+        if self.delegate != nil {
+            self.delegate!.onCreate(sender: self, name: nameEdit.text!, description: descriptionEdit.text!, icon: #imageLiteral(resourceName: "noImage"))
+        }
     }
     
-    private func syncViewWithModel() {
-        
+    private func setCreateButtonState() {
+        var state: Bool! = false
+        if !descriptionEditIsEmpty && nameEdit.text != "" {
+            state = true
+        }
+        if createButton.isEnabled != state {
+            createButton.isEnabled = state
+        }
+    }
+    
+    // MARK: - Animation
+    
+    func Show() {
+        UIView.animate(withDuration: 0.225, delay: 0, options: [.curveEaseIn], animations: {
+            self.frame.origin.y = 201
+        }, completion: { (isCompleted: Bool) -> Void in
+            return
+        })
+    }
+    
+    func Hide() {
+        UIView.animate(withDuration: 0.225, delay: 0, options: [.curveEaseOut], animations: {
+            self.frame.origin.y = -279
+        }, completion: { (isCompleted: Bool) -> Void in
+            return
+        })
     }
 }

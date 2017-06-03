@@ -9,6 +9,6 @@
 import Foundation
 import UIKit
 protocol NewCategoryViewDelegate {
-    func onCreate(name: String, description: String, icon: UIImage)
-    func onCancel()
+    func onCreate(sender : NewCategoryView, name: String, description: String, icon: UIImage)
+    func onCancel(sender : NewCategoryView)
 }
