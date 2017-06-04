@@ -41,6 +41,15 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
             return _newBlurView!
         }
     }
+    private var _realBlurView : BlurView?
+    var realBlurView: BlurView {
+        get {
+            if _realBlurView == nil {
+                _realBlurView = BlurView(frame: ToDoListContext.instance.rootView.frame)
+            }
+            return _realBlurView!
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +66,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         let rootView = ToDoListContext.instance.rootView
         rootView.addSubview(newBlurView)
         rootView.addSubview(newCategoryView)
+        rootView.addSubview(realBlurView)
         newCategoryView.delegate = self
         //for view in rootView.subviews {
         //    print(view)
@@ -148,7 +158,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         }
     }
 
-    //MARK: Actions
+    // MARK: - Actions
     
     @IBAction func showProfileClick(_ sender: UIButton) {
     }
@@ -159,11 +169,12 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         presentNewCategory()
     }
     @IBAction func showGridClick(_ sender: UIButton) {
+        realBlurView.Show()
     }
     func onCloseNewCategoryClick(_ sender: UIButton) {
         hideNewCategory()
     }
-    //MARK: Private methods
+    //MARK: - Private methods
     func loadSampleFilterOptions() {
         filterOptions = ["option1", "option2", "option3"]
     }

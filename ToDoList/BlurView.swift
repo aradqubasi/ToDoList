@@ -8,17 +8,28 @@
 
 import UIKit
 
-class BlurView: UIImageView {
+class BlurView: UIVisualEffectView {
     // MARK: - Initialization
-    override init(frame: CGRect) {
+    init(frame: CGRect) {
         var viewFrame = frame
-        viewFrame.origin = CGPoint.zero
-        super.init(frame: frame)
-        
-        
+        let blur = UIBlurEffect(style: .light)
+        viewFrame.origin = CGPoint(x: 0, y: -frame.height)
+        //viewFrame.origin = CGPoint(x: 0, y: 0)
+        super.init(effect: blur)
+        self.frame = viewFrame
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Animation
+    
+    func Show() {
+        self.frame.origin.y = 0
+    }
+    
+    func Hide() {
+        self.frame.origin.y = self.frame.size.height
     }
 }
