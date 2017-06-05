@@ -12,7 +12,7 @@ class BlurView: UIVisualEffectView {
     // MARK: - Initialization
     init(frame: CGRect) {
         var viewFrame = frame
-        let blur = UIBlurEffect(style: .light)
+        let blur = UIBlurEffect(style: .dark)
         viewFrame.origin = CGPoint(x: 0, y: -frame.height)
         //viewFrame.origin = CGPoint(x: 0, y: 0)
         super.init(effect: blur)

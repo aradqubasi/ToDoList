@@ -170,6 +170,11 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     @IBAction func showGridClick(_ sender: UIButton) {
         realBlurView.Show()
+        let rootView = ToDoListContext.instance.rootView
+        let filters = ["Option1", "Option2", "Option3", "Cancel"]
+        let buttons = ButtonsList(frame: rootView.frame, options: filters)
+        rootView.addSubview(buttons)
+        buttons.Show()
     }
     func onCloseNewCategoryClick(_ sender: UIButton) {
         hideNewCategory()
