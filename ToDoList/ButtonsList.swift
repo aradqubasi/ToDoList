@@ -9,6 +9,11 @@
 import UIKit
 
 class ButtonsList: UIView {
+    
+    // MARK: - Properties
+    
+    var delegate: ButtonsListDelegate?
+    
     // MARK: - Private Properties
     
     private var _attributes: [String: Any] {
@@ -77,7 +82,10 @@ class ButtonsList: UIView {
     // MARK: - Public Methods
     
     func onClick(sender: UIButton) {
-        Hide()
+        if delegate != nil {
+            let clicked = sender.attributedTitle(for: .normal)?.string
+            delegate!.onClick(sender: self, option: clicked!)
+        }
     }
     
     // MARK: - Animation
@@ -89,7 +97,7 @@ class ButtonsList: UIView {
             UIView.animate(withDuration: 0.225, delay: TimeInterval(delay), options: .curveEaseIn, animations: {
                 subview.frame.origin.y -= self._offset
             }, completion: nil)
-            delay += 0.1
+            delay += 0.075
         }
         /*
         for subview in subviews {
@@ -104,11 +112,11 @@ class ButtonsList: UIView {
     func Hide() {
         var delay: CGFloat = 0
         for index in 0..<subviews.count {
-            let subview = subviews[subviews.count - 1 - index]
+            let subview = subviews[index]
             UIView.animate(withDuration: 0.225, delay: TimeInterval(delay), options: .curveEaseIn, animations: {
                 subview.frame.origin.y += self._offset
             }, completion: nil)
-            delay += 0.1
+            delay += 0.075
         }
     }
 }

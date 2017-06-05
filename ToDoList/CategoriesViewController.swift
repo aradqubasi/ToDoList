@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoriesViewController: UIViewController, UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate, UICollectionViewDelegate, NewCategoryViewDelegate {
+class CategoriesViewController: UIViewController, UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, UIPopoverPresentationControllerDelegate, UICollectionViewDelegate, NewCategoryViewDelegate, ButtonsListDelegate {
 
     //MARK: Properties
     
@@ -51,6 +51,17 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         }
     }
     
+    private var _categoryFiltersView: ButtonsList?
+    private var categoryFiltersView: ButtonsList {
+        get {
+            if _categoryFiltersView == nil {
+                let rootFrame = ToDoListContext.instance.rootView.frame
+                _categoryFiltersView = ButtonsList(frame: rootFrame, options: ["User Defined", "System", "Cancel"])
+            }
+            return _categoryFiltersView!
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -68,6 +79,7 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         rootView.addSubview(newCategoryView)
         rootView.addSubview(realBlurView)
         newCategoryView.delegate = self
+        categoryFiltersView.delegate = self
         //for view in rootView.subviews {
         //    print(view)
         //}
@@ -169,12 +181,10 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
         presentNewCategory()
     }
     @IBAction func showGridClick(_ sender: UIButton) {
-        realBlurView.Show()
         let rootView = ToDoListContext.instance.rootView
-        let filters = ["Option1", "Option2", "Option3", "Cancel"]
-        let buttons = ButtonsList(frame: rootView.frame, options: filters)
-        rootView.addSubview(buttons)
-        buttons.Show()
+        rootView.addSubview(categoryFiltersView)
+        realBlurView.Show()
+        categoryFiltersView.Show()
     }
     func onCloseNewCategoryClick(_ sender: UIButton) {
         hideNewCategory()
@@ -197,6 +207,15 @@ class CategoriesViewController: UIViewController, UICollectionViewDataSource, UI
     }
     func onCancel(sender : NewCategoryView) {
         hideNewCategory();
+    }
+    
+    // MARK: - ButtonsListDelegate Methods
+    
+    func onClick(sender: ButtonsList, option: String) {
+        sender.Hide()
+        sender.removeFromSuperview()
+        realBlurView.Hide()
+        print(option)
     }
     
     // MARK: - Animated
